@@ -1,0 +1,61 @@
+<!--
+  Generated template for the DailyPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+
+    <ion-title text-center>Task Daily</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div style="text-align:center;">
+      <h4 ion-text><ion-datetime displayFormat="DDDD, D MMMM YYYY" [(ngModel)]="myDate"></ion-datetime></h4>
+  </div>
+    <ion-list>
+      <button ion-item *ngFor="let class of classInfo" (click)="do_class(class)">
+        <ion-icon name="people" item-start style="color:orange"></ion-icon>
+        <h3 style="font-weight:bold;" text-uppercase>{{class.kode_mk}}-{{class.kelas}}</h3>
+        <h3>{{class.nama_mk}}</h3>
+        <h4>{{class.jam_mulai}} - {{class.jam_selesai}}</h4>
+        <h4>{{class.ruangan}}</h4>
+        <!-- <p *ngIf="quote.quotes.length > 1">{{quote.quotes.length}} quotes</p>
+        <p *ngIf="quote.quotes.length == 1">{{quote.quotes.length}} quote</p> -->
+      </button>
+    </ion-list>
+  
+  <ion-list *ngFor="let assign of assignInfo">
+    <button ion-item>
+      <ion-icon name="alarm" item-start style="color:red"></ion-icon>
+      <h3 text-uppercase>{{assign.kode_mk}}</h3>
+      <h3>{{assign.name}}</h3>
+      <h4>{{assign.startdate}} - {{assign.enddate}}</h4>
+      <!-- <h4>{{class.ruangan}}</h4> -->
+      <!-- <h2 text-uppercase>Assignment</h2>
+      <p>08.00 - 11.00</p> -->
+      <!-- <p *ngIf="quote.quotes.length > 1">{{quote.quotes.length}} quotes</p>
+      <p *ngIf="quote.quotes.length == 1">{{quote.quotes.length}} quote</p> -->
+    </button>
+  </ion-list>
+
+  <ion-list *ngFor="let quiz of quizInfo">
+    <button ion-item>
+      <ion-icon name="game-controller-b" item-start style="color:blue"></ion-icon>
+      <h3>{{quiz.name}}</h3>
+      <h4>{{quiz.startdate}} - {{quiz.enddate}}</h4>
+      <!-- <h2 text-uppercase>Quiz</h2>
+      <p>08.00 - 11.00</p> -->
+      <!-- <p *ngIf="quote.quotes.length > 1">{{quote.quotes.length}} quotes</p>
+      <p *ngIf="quote.quotes.length == 1">{{quote.quotes.length}} quote</p> -->
+    </button>
+  </ion-list>
+</ion-content>

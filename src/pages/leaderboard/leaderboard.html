@@ -1,0 +1,58 @@
+<!--
+  Generated template for the LeaderboardPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title text-center>Leaderboard</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div center>
+    <ion-item>
+      <ion-label>Filter</ion-label>
+      <ion-select [(ngModel)]="filter">
+        <ion-option value="level">Level</ion-option>
+        <ion-option value="badges">Badges</ion-option>
+      </ion-select>
+    </ion-item>
+  </div>
+  <ion-list *ngFor="let leaderboard of byLevelInfo; let i =  index">
+    <ion-item>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-2>
+            <h1>{{i+1}}</h1>
+          </ion-col>
+          <ion-col>
+            <h2 text-capitalize>{{leaderboard.nama}}</h2>
+            <h3>Lv.{{leaderboard.level}}</h3>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+    <!-- <ion-item style="background:red;">
+      <ion-grid>
+        <ion-row>
+          <ion-col col-2>
+            <h1>2</h1>
+          </ion-col>
+          <ion-col>
+            <h2>Nama</h2>
+            <h3>point/badges</h3>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item> -->
+  </ion-list>
+
+</ion-content>

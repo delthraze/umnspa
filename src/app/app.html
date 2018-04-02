@@ -1,0 +1,49 @@
+<ion-menu [content]="sideMenuContent">
+    <ion-header>
+        <ion-toolbar text-center>
+            <h2>Menu</h2>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content>
+        <ion-list>
+            <button ion-item (click)="onLoad(tabsPage)">
+                <ion-icon name="list" item-left></ion-icon>
+                    Task
+            </button>
+            <button ion-item (click)="onLoad(profilePage)">
+                <ion-icon name="contact" item-left></ion-icon>
+                    Profile
+            </button>
+            <button ion-item (click)="onLoad(badgesPage)">
+                <ion-icon name="medal" item-left></ion-icon>
+                    Badges
+            </button>
+            <button ion-item (click)="onLoad(leaderboardPage)">
+                <ion-icon name="people" item-left></ion-icon>
+                    Leaderboard
+            </button>
+            <button ion-item (click)="onLoad(settingPage)">
+                <ion-icon name="settings" item-left></ion-icon>
+                    Settings
+            </button>
+            <!-- <button ion-item (click)="logout()">
+                <ion-icon name="log-out" item-left></ion-icon>
+                    Logout
+            </button> -->
+        </ion-list>
+    </ion-content>
+    <!-- <ion-content *ngIf="this.$signed==0">
+        <ion-list>
+            <button ion-item (click)="onLoad(rootPage)">
+                <ion-icon name="log-in" item-left></ion-icon>
+                    Sign In
+            </button>
+            <button ion-item (click)="onLoad(signUpPage)">
+                <ion-icon name="person-add" item-left></ion-icon>
+                    Sign Up
+            </button>
+        </ion-list>
+    </ion-content> -->
+</ion-menu>
+
+<ion-nav [root]="rootPage" #sideMenuContent></ion-nav>

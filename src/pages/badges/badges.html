@@ -1,0 +1,71 @@
+<!--
+  Generated template for the BadgesPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title text-center>Badges</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <div>
+    <ion-card>
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-2>
+                <!-- <img src="assets/icon/user.png" style="width:50%;"/> -->
+                <img src="http://localhost/umnspa/src/badges/test.png"/>
+            </ion-col>
+            <ion-col>
+                <ion-row>
+                  <ion-col>
+                    <h3>nama</h3>
+                  </ion-col>
+                  <ion-col>
+                    <h4>unlocked 1 Jan 2018@10:10am</h4>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <h4>deskripsi badges</h4>
+                </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+  </div>
+  <div>
+    <ion-card>
+      <ion-card-content>
+        <ion-grid>
+          <ion-row>
+            <ion-col col-2>
+                <img src="assets/icon/user.png" style="width:50%;"/>
+            </ion-col>
+            <ion-col>
+                <ion-row>
+                  <h3>nama</h3>
+                </ion-row>
+                <ion-row>
+                  <h4>how to get</h4>
+                </ion-row>
+                <ion-row>
+                  <progress-bar [progress]="loadProgress"></progress-bar>
+                </ion-row>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+      </ion-card-content>
+    </ion-card>
+  </div>
+</ion-content>

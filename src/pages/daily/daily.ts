@@ -49,7 +49,7 @@ export class DailyPage {
       'nim' : this.authService.nim
     }
 
-    this.webService.post("http://localhost/umnspa/get_today_class.php", JSON.stringify(req), null).subscribe(response => {
+    this.webService.post(this.webService.url + "get_today_class.php", JSON.stringify(req), null).subscribe(response => {
       //console.log(response["_body"]);
       let responseData = JSON.parse(response["_body"]);
       //console.log(JSON.stringify(responseData))
@@ -62,15 +62,17 @@ export class DailyPage {
   }
 
   getAssignmentInfo(){
+
+    //console.log(this.authService.id_moodle);
     
     let req = {
       'id_moodle' : this.authService.id_moodle
     }
 
-    this.webService.post("http://localhost/umnspa/get_assignment.php", JSON.stringify(req), null).subscribe(response => {
+    this.webService.post(this.webService.url + "get_assignment.php", JSON.stringify(req), null).subscribe(response => {
       //console.log(response["_body"]);
       let responseData = JSON.parse(response["_body"]);
-      //console.log(JSON.stringify(responseData))
+      console.log(JSON.stringify(responseData))
       if(responseData){
         this.assignInfo = responseData;
         //console.log(this.classInfo);
@@ -85,7 +87,7 @@ export class DailyPage {
       'id_moodle' : this.authService.id_moodle
     }
 
-    this.webService.post("http://localhost/umnspa/get_quiz.php", JSON.stringify(req), null).subscribe(response => {
+    this.webService.post(this.webService.url + "get_quiz.php", JSON.stringify(req), null).subscribe(response => {
       //console.log(response["_body"]);
       let responseData = JSON.parse(response["_body"]);
       //console.log(JSON.stringify(responseData))
@@ -120,7 +122,7 @@ export class DailyPage {
             }
             //console.log(req['nim'])
         
-            this.webService.post("http://localhost/umnspa/add_class.php", JSON.stringify(req), null).subscribe(response => {
+            this.webService.post(this.webService.url + "add_class.php", JSON.stringify(req), null).subscribe(response => {
               let responseData = JSON.parse(response["_body"]);
               console.log(responseData)
               if(responseData['success']){
@@ -169,7 +171,7 @@ export class DailyPage {
             }
             //console.log(req['nim'])
         
-            this.webService.post("http://localhost/umnspa/add_class.php", JSON.stringify(req), null).subscribe(response => {
+            this.webService.post(this.webService.url + "add_class.php", JSON.stringify(req), null).subscribe(response => {
               let responseData = JSON.parse(response["_body"]);
               console.log(responseData)
               if(responseData['success']){
@@ -212,119 +214,121 @@ export class DailyPage {
     console.log(classInfo.kode_mk)
   }
 
-  // do_assignment(assignInfo) {
-  //   // swal({
-  //   //   title: "Are you sure?",
-  //   //   text: classInfo.kode_mk + ' - ' + classInfo.nama_mk + '\n' +
-  //   //       "Are you sure that you want to attend this class?",
-  //   //   icon: "warning",
-  //   // })
-  //   const alert = this.alertCtrl.create({ 
-  //     title: 'Attend Class',
-  //     message: assignInfo.kode_mk + '-' + assignInfo.kelas + '<br>'+ assignInfo.nama_mk,
-  //     buttons: [ 
-  //       { 
-  //         text: 'Attend', 
-  //         handler: data => { 
-  //           let req = {
-  //             "nim" : this.authService.nim,
-  //             "id_kelas" : classInfo.id_kelas,
-  //             "kode_mk" : classInfo.kode_mk,
-  //             "nama_mk" : classInfo.nama_mk,
-  //             "absensi" : 'Y'
-  //           }
-  //           //console.log(req['nim'])
+  do_assignment(assignInfo) {
+    // swal({
+    //   title: "Are you sure?",
+    //   text: classInfo.kode_mk + ' - ' + classInfo.nama_mk + '\n' +
+    //       "Are you sure that you want to attend this class?",
+    //   icon: "warning",
+    // })
+    const alert = this.alertCtrl.create({ 
+      title: 'Already Submit Assignment?',
+      message: assignInfo.kode_mk + '<br>'+ assignInfo.name,
+      buttons: [ 
+        { 
+          text: 'Yes', 
+          handler: data => { 
+            let req = {
+              "nim" : this.authService.nim,
+              "id_elearning" : assignInfo.id_elearning,
+              "kode_mk" : assignInfo.kode_mk,
+              "name" : assignInfo.name,
+              "startdate" : assignInfo.startdate,
+              "enddate" : assignInfo.enddate
+            }
+            //console.log(req['nim'])
         
-  //           this.webService.post("http://localhost/umnspa/add_class.php", JSON.stringify(req), null).subscribe(response => {
-  //             let responseData = JSON.parse(response["_body"]);
-  //             console.log(responseData)
-  //             if(responseData['success']){
-  //               //this.navCtrl.push(TabEventPage);
-  //               //harusnya apus
-  //               let ctr = 0;
+            this.webService.post(this.webService.url + "add_assignment.php", JSON.stringify(req), null).subscribe(response => {
+              //console.log(response["_body"]);
+              let responseData = JSON.parse(response["_body"]);
+              //console.log(responseData)
+              if(responseData['success']){
+                //this.navCtrl.push(TabEventPage);
+                //harusnya apus
+                let ctr = 0;
 
-  //               for(let selected of this.classInfo){
-  //                 if(classInfo.kode_mk == selected.kode_mk && classInfo.kelas == selected.kelas){
-  //                     this.classInfo.splice(ctr,1);
-  //                     break;
-  //                 }
-  //                 else {
-  //                     ctr++;
-  //                 }
-  //               }
-  //             }
-  //             else{
-  //               let alert = this.alertCtrl.create({
-  //                 title: 'Add Event Failed',
-  //                 subTitle: 'Add Event ',
-  //                 buttons: [
-  //                   {
-  //                     text: 'Ok',
-  //                     handler: data => {
-  //                       //this.navCtrl.push(TabEventPage)
-  //                     }
-  //                   }
-  //                 ]
-  //               });
-  //               alert.present();
-  //             }
-  //           }, error =>{
-  //           })
-  //         } 
-  //       },
-  //       { 
-  //         text: 'Not Attend',
-  //         handler: data => { 
-  //           let req = {
-  //             "nim" : this.authService.nim,
-  //             "id_kelas" : classInfo.id_kelas,
-  //             "kode_mk" : classInfo.kode_mk,
-  //             "nama_mk" : classInfo.nama_mk,
-  //             "absensi" : 'N'
-  //           }
-  //           //console.log(req['nim'])
+                for(let selected of this.assignInfo){
+                  if(assignInfo.id_elearning == selected.id_elearning){
+                      this.assignInfo.splice(ctr,1);
+                      break;
+                  }
+                  else {
+                      ctr++;
+                  }
+                }
+              }
+              else{
+                let alert = this.alertCtrl.create({
+                  title: 'Add Event Failed',
+                  subTitle: 'Add Event ',
+                  buttons: [
+                    {
+                      text: 'Ok',
+                      handler: data => {
+                        //this.navCtrl.push(TabEventPage)
+                      }
+                    }
+                  ]
+                });
+                alert.present();
+              }
+            }, error =>{
+            })
+          } 
+        },
+        // { 
+        //   text: 'Cancel',
+        //   handler: data => { 
+        //     let req = {
+        //       "nim" : this.authService.nim,
+        //       "id_kelas" : classInfo.id_kelas,
+        //       "kode_mk" : classInfo.kode_mk,
+        //       "nama_mk" : classInfo.nama_mk,
+        //       "absensi" : 'N'
+        //     }
+        //     //console.log(req['nim'])
         
-  //           this.webService.post("http://localhost/umnspa/add_class.php", JSON.stringify(req), null).subscribe(response => {
-  //             let responseData = JSON.parse(response["_body"]);
-  //             console.log(responseData)
-  //             if(responseData['success']){
-  //               //this.navCtrl.push(TabEventPage);
-  //               //harusnya apus
-  //               let ctr = 0;
+        //     this.webService.post("http://localhost/umnspa/add_class.php", JSON.stringify(req), null).subscribe(response => {
+        //       let responseData = JSON.parse(response["_body"]);
+        //       console.log(responseData)
+        //       if(responseData['success']){
+        //         //this.navCtrl.push(TabEventPage);
+        //         //harusnya apus
+        //         let ctr = 0;
 
-  //               for(let selected of this.classInfo){
-  //                 if(classInfo.kode_mk == selected.kode_mk && classInfo.kelas == selected.kelas){
-  //                     this.classInfo.splice(ctr,1);
-  //                     break;
-  //                 }
-  //                 else {
-  //                     ctr++;
-  //                 }
-  //               }
-  //             }
-  //             else{
-  //               let alert = this.alertCtrl.create({
-  //                 title: 'Add Event Failed',
-  //                 subTitle: 'Add Event ',
-  //                 buttons: [
-  //                   {
-  //                     text: 'Ok',
-  //                     handler: data => {
-  //                       //this.navCtrl.push(TabEventPage)
-  //                     }
-  //                   }
-  //                 ]
-  //               });
-  //               alert.present();
-  //             }
-  //           }, error =>{
-  //           })
-  //         } 
-  //       }
-  //     ]
-  //     });
-  //     alert.present(); 
-  //   console.log(classInfo.kode_mk)
-  // }
+        //         for(let selected of this.classInfo){
+        //           if(classInfo.kode_mk == selected.kode_mk && classInfo.kelas == selected.kelas){
+        //               this.classInfo.splice(ctr,1);
+        //               break;
+        //           }
+        //           else {
+        //               ctr++;
+        //           }
+        //         }
+        //       }
+        //       else{
+        //         let alert = this.alertCtrl.create({
+        //           title: 'Add Event Failed',
+        //           subTitle: 'Add Event ',
+        //           buttons: [
+        //             {
+        //               text: 'Ok',
+        //               handler: data => {
+        //                 //this.navCtrl.push(TabEventPage)
+        //               }
+        //             }
+        //           ]
+        //         });
+        //         alert.present();
+        //       }
+        //     }, error =>{
+        //     })
+        //   } 
+        // }
+      ]
+      });
+      alert.present(); 
+    console.log(assignInfo.kode_mk)
+  }
 
 }

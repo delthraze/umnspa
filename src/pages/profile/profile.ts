@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController } from 'ionic-angular';
 import { WebService } from '../../service/WebService';
 import { AuthService } from '../../service/AuthService';
 
@@ -21,9 +21,11 @@ export class ProfilePage {
   userInfo: any;
   classInfo: any;
   jatah_absen = 3;
+  loading: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
-    private webService:WebService, private authService: AuthService) {
+    private webService:WebService, private authService: AuthService,
+    public loadingCtrl: LoadingController) {
   }
 
   ionViewDidLoad() {
@@ -33,9 +35,11 @@ export class ProfilePage {
   }
 
   ionViewWillEnter(){
+    //this.presentLoading();
     this.getLevelInfo();
     this.getUserInfo();
     this.getClassInfo();
+    this.dismissLoading();
   }
 
   getUserInfo(){
@@ -45,7 +49,7 @@ export class ProfilePage {
         'nim' : this.authService.nim
       }
 
-      this.webService.post("http://localhost/umnspa/get_user_data.php", JSON.stringify(req), null).subscribe(response => {
+      this.webService.post(this.webService.url + "get_user_data.php", JSON.stringify(req), null).subscribe(response => {
         let responseData = JSON.parse(response["_body"]);
         //console.log(JSON.stringify(responseData))
         if(responseData){
@@ -67,7 +71,7 @@ export class ProfilePage {
       'nim' : this.authService.nim
     }
 
-    this.webService.post("http://localhost/umnspa/get_class_data.php", JSON.stringify(req), null).subscribe(response => {
+    this.webService.post(this.webService.url + "get_class_data.php", JSON.stringify(req), null).subscribe(response => {
       let responseData = JSON.parse(response["_body"]);
       //console.log(JSON.stringify(responseData))
       if(responseData){
@@ -84,8 +88,8 @@ export class ProfilePage {
     let req = {
       'nim' : this.authService.nim
     }
-
-    this.webService.post("http://localhost/umnspa/update_level.php", JSON.stringify(req), null).subscribe(response => {
+    this.presentLoading();
+    this.webService.post(this.webService.url + "update_level.php", JSON.stringify(req), null).subscribe(response => {
       let responseData = JSON.parse(response["_body"]);
       //console.log("Asd",JSON.stringify(responseData))
       if(responseData){
@@ -95,6 +99,22 @@ export class ProfilePage {
     }, error =>{
     })
 
+  }
+
+  presentLoading(){
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+
+    this.loading.present();
+
+    // setTimeout(() => {
+    //   loading.dismiss();
+    // }, 5000);
+  }
+
+  dismissLoading(){
+    this.loading.dismiss();
   }
 
 }

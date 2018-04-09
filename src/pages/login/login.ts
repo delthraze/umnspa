@@ -20,7 +20,8 @@ export class LoginPage {
   tabsPage = TabsPage;
   LoginForm: FormGroup;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private authService: AuthService, private app:App) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, 
+    private authService: AuthService, private app:App) {
   }
 
   ionViewDidLoad() {

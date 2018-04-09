@@ -3,6 +3,12 @@ import { Http, Response, ResponseContentType, Headers, RequestOptions } from '@a
 
 @Injectable()
 export class WebService {
+    //url = 'http://localhost/umnspa/';
+    //url = 'http://192.168.1.29/umnspa/';
+    //ip lab mobile
+    url = 'http://192.168.5.20/umnspa/';
+    //url = 'http://192.168.137.1/umnspa/';
+    
     
     constructor(private http: Http) {
     }

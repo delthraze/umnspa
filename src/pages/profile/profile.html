@@ -23,7 +23,7 @@
         <ion-grid>
           <ion-row>
             <ion-col col-4>
-                <img src="assets/icon/user.png" style="width:75%;"/>
+                <img src="assets/avatar/{{profile.avatar}}" style="width:75%;"/>
             </ion-col>
             <ion-col col-8>
                 <ion-row>
@@ -42,7 +42,7 @@
             <ion-col>
               <h3>Lv.{{profile.level}}</h3>
               <progress-bar [progress]="loadProgress" style="font-size:8pt;"></progress-bar>
-              <h3>"Angkatan Atas"</h3>
+              <h3>"{{profile.title}}"</h3>
             </ion-col>
             <ion-col>
               <ion-icon name="cash" item-start style="color:orange"></ion-icon>

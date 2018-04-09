@@ -1,3 +1,39 @@
 page-badges {
-
+    ion-card{
+        position: relative !important;
+        height: 110px;
+    }
+    ion-card-header{
+        position: absolute;
+        left: 55px;
+    }
+    ion-card-content{
+        position: absolute;
+        left: 55px;
+        top:40px;
+    }
+    progress-bar{
+        position: absolute;
+        top:60px;
+        width:100%;
+        font-size:9pt !important;
+        .progress-outer{
+            height: 30px !important;
+        }
+        .progress-inner{
+            height:22px !important;
+        }
+    }
+    .bdgImg{
+        width:15%;
+        position: absolute;
+        left: 10px;
+        top:10px;
+    }
+    .claim{
+        position: absolute;
+        right:15px;
+        top:10px;
+        width:30px;
+    }    
 }

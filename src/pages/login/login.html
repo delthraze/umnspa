@@ -17,11 +17,17 @@
   <div style="text-align:center; margin-top:100px;">
     <img src="assets/imgs/logo_spa.png" style="width:50%;"/>
   </div>
-  <div>
-    <form  style="margin-top:50px;" [formGroup]="LoginForm" (ngSubmit)="onSubmit()">
-      <ion-input type="email" formControlName="email" placeholder="E-mail Student"></ion-input>
-      <ion-input type="password" formControlName="password" placeholder="Password"></ion-input>
-      <button ion-button type="submit" block [disabled]="!LoginForm.valid">Login</button>
+  <div style="text-align:center;">
+    <form style="margin-top:50px;margin-left:10px;margin-right:10px;  " [formGroup]="LoginForm" (ngSubmit)="onSubmit()">
+      <ion-item >
+          <ion-label color="primary" floating>E-mail Student</ion-label>
+          <ion-input type="email" formControlName="email" clearInput></ion-input>
+      </ion-item>
+      <ion-item>
+          <ion-label color="primary" floating>Password</ion-label>
+          <ion-input type="password" formControlName="password" clearInput></ion-input>
+      </ion-item>
+      <button ion-button type="submit" block [disabled]="!LoginForm.valid" style="margin-top:20px;margin-left:15px;width:19em;">Login</button>
     </form>
   </div>
   <div style="text-align:center;">

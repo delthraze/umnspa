@@ -18,7 +18,8 @@ import { WebService } from '../../service/WebService';
 export class LeaderboardPage {
   byLevelInfo: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private authService: AuthService, private webService: WebService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, 
+    private authService: AuthService, private webService: WebService) {
   }
 
   ionViewDidLoad() {
@@ -36,9 +37,9 @@ export class LeaderboardPage {
       //'nim' : this.authService.nim
     }
 
-    this.webService.post("http://localhost/umnspa/leaderboard_level.php", JSON.stringify(req), null).subscribe(response => {
+    this.webService.post(this.webService.url + "leaderboard_level.php", JSON.stringify(req), null).subscribe(response => {
       let responseData = JSON.parse(response["_body"]);
-      console.log(JSON.stringify(responseData))
+      //console.log(JSON.stringify(responseData))
       if(responseData){
         this.byLevelInfo = responseData;
       }

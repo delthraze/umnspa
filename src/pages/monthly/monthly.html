@@ -24,7 +24,7 @@
 
 <ion-content padding class="has-header">
     <div style="text-align:center;">
-        <h1 ion-text><ion-datetime displayFormat= "MMMM YYYY" [(ngModel)]="myDate"></ion-datetime></h1>
+        <h1 ion-text><ion-datetime displayFormat= "MMMM YYYY" [(ngModel)]="myDate" disabled></ion-datetime></h1>
     </div>
     <calendar [eventSource]="eventSource"
     [calendarMode]="calendar.mode"

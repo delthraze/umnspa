@@ -19,7 +19,7 @@
 
 <ion-content padding>
   <div style="text-align:center;">
-      <h4 ion-text><ion-datetime displayFormat="DDDD, D MMMM YYYY" [(ngModel)]="myDate"></ion-datetime></h4>
+      <h4 ion-text><ion-datetime displayFormat="DDDD, D MMMM YYYY" [(ngModel)]="myDate" disabled ></ion-datetime></h4>
   </div>
     <ion-list>
       <button ion-item *ngFor="let class of classInfo" (click)="do_class(class)">
@@ -33,8 +33,8 @@
       </button>
     </ion-list>
   
-  <ion-list *ngFor="let assign of assignInfo">
-    <button ion-item>
+  <ion-list>
+    <button ion-item *ngFor="let assign of assignInfo" (click)="do_assignment(assign)">
       <ion-icon name="alarm" item-start style="color:red"></ion-icon>
       <h3 text-uppercase>{{assign.kode_mk}}</h3>
       <h3>{{assign.name}}</h3>

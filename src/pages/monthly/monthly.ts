@@ -27,7 +27,8 @@ export class MonthlyPage {
       currentDate: new Date()
   }; // these are the variable used by the calendar.
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private authService: AuthService, private webService: WebService) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, 
+    private authService: AuthService, private webService: WebService) {
   }
 
 //   ionViewDidLoad() {
@@ -81,7 +82,7 @@ export class MonthlyPage {
       'nim' : this.authService.nim
     }
 
-    this.webService.post("http://localhost/umnspa/get_class_monthly.php", JSON.stringify(req), null).subscribe(response => {
+    this.webService.post(this.webService.url + "get_class_monthly.php", JSON.stringify(req), null).subscribe(response => {
       //console.log(response["_body"]);
       let responseData = JSON.parse(response["_body"]);
       console.log(JSON.stringify(responseData))

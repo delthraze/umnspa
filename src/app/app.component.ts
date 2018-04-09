@@ -12,6 +12,8 @@ import { SettingPage } from '../pages/setting/setting';
 import { AuthService } from '../service/AuthService';
 import { DatabaseService } from '../service/DBService';
 import { SweetAlertService } from 'ng2-sweetalert2';
+import { Storage } from '@ionic/storage';
+import { OneSignal } from '@ionic-native/onesignal';
 
 @Component({
   templateUrl: 'app.html'
@@ -30,42 +32,54 @@ export class MyApp {
 
   @ViewChild('sideMenuContent') nav: NavController;
 
-  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, private menuCtrl: MenuController, private dbSvc:DatabaseService, private authService: AuthService) {
-    platform.ready().then(() => {
-      // Okay, so the platform is ready and our plugins are available.
-      // Here you can do any higher level native things you might need.
-      statusBar.styleDefault();
-      splashScreen.hide();
-
-      this.dbSvc.initDatabase();
-      this.dbSvc.testDB();
-
-        let query = "SELECT id FROM tbl_user";
-        //console.log(query);
-        this.dbSvc.query(query, (data:any)=>
-        {
-          let len = data.rows.length;
-          let asd = data.rows.item[0].id;
-          if(len > 0){
-            // Uda pernah login
-            console.log(asd)
-            this.isLogin = true;
-            this.nav.setRoot(TabsPage);
-            //console.log("ada data");
-          }
-          else{
-            // Belom pernah login
-            this.isLogin = false;
-            this.nav.setRoot(LoginPage);
-            //console.log("ga ada data");
-          }
-          console.log(this.isLogin);
-        }, ()=>
-        {
-          // Kalo gagal,
-          //console.log("gagal"); 
-        })
-    });
+  constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, 
+    private menuCtrl: MenuController, private dbSvc:DatabaseService, 
+    private authService: AuthService, private storage: Storage,
+    private oneSignal: OneSignal) {
+      setTimeout(() => {
+        platform.ready().then(() => {
+          // Okay, so the platform is ready and our plugins are available.
+          // Here you can do any higher level native things you might need.
+          statusBar.styleDefault();
+          splashScreen.hide();
+      
+          /*
+          * Start One Signal
+          */
+          this.oneSignal.startInit('864a2d88-43c4-4989-91f6-dda2a6451225', '671939219863');
+          this.oneSignal.inFocusDisplaying(this.oneSignal.OSInFocusDisplayOption.Notification);
+          this.oneSignal.setSubscription(true);
+          this.oneSignal.handleNotificationReceived().subscribe((data) => {
+            console.log('dapat data dari onesignal');
+            console.log(data);
+          });
+          
+          this.oneSignal.handleNotificationOpened().subscribe((jsonData) => {
+            let data = JSON.parse(JSON.stringify(jsonData)).notification.payload.additionalData;
+            
+          });
+          this.oneSignal.endInit();
+          /*
+          * End One Signal
+          */
+    
+          //sessions
+          this.storage.get('sessions').then((value) => {
+            //jika sessions terisi, maka sudah login
+            if (value != null && value.nim !== '' && value.email !== '' && value.id_moodle !== '') {
+              this.authService.nim = value.nim;
+              this.authService.email = value.email;
+              this.authService.id_moodle = value.id_moodle;
+              this.isLogin = true;
+              this.nav.setRoot(TabsPage);
+            } else {
+              this.nav.setRoot(LoginPage);
+              
+            }
+          });
+        });
+      }, 4000)
+    
   }
 
   onLoad(page: any){

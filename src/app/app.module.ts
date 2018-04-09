@@ -22,6 +22,9 @@ import { WebService } from '../service/WebService';
 import { SQLite } from '@ionic-native/sqlite';
 import { HttpModule } from '@angular/http';
 import { FormsModule } from '@angular/forms';
+import { IonicStorageModule } from '@ionic/storage';
+import { SettingsService } from '../service/SettingService';
+import { OneSignal } from '@ionic-native/onesignal';
 
 @NgModule({
   declarations: [
@@ -42,7 +45,8 @@ import { FormsModule } from '@angular/forms';
     NgCalendarModule,
     FormsModule,
     HttpModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -64,7 +68,9 @@ import { FormsModule } from '@angular/forms';
     AuthService,
     WebService,
     DatabaseService,
+    SettingsService,
     SQLite,
+    OneSignal,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })

@@ -1,3 +1,19 @@
 page-login {
-
+    .logo{
+        width: 80%;
+    }
+    .formSignIn{
+        margin-left:-15px;
+        width: 100%;
+    }
+    .submitButton{
+        width: 96%;
+        height: 40px;
+        top: 10px;
+        left: 15px;
+    }
+    .detail{
+        margin-top : 20px;
+        text-align: center;
+    }
 }

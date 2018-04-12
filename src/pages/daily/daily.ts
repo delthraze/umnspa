@@ -55,6 +55,7 @@ export class DailyPage {
       //console.log(JSON.stringify(responseData))
       if(responseData){
         this.classInfo = responseData;
+        console.log('kelas');
         //console.log(this.classInfo);
       }
     }, error =>{
@@ -75,9 +76,12 @@ export class DailyPage {
       console.log(JSON.stringify(responseData))
       if(responseData){
         this.assignInfo = responseData;
+        console.log('tugas');
         //console.log(this.classInfo);
       }
     }, error =>{
+      console.log('assign error');
+
     })
   }
 
@@ -90,9 +94,10 @@ export class DailyPage {
     this.webService.post(this.webService.url + "get_quiz.php", JSON.stringify(req), null).subscribe(response => {
       //console.log(response["_body"]);
       let responseData = JSON.parse(response["_body"]);
-      //console.log(JSON.stringify(responseData))
+      console.log(JSON.stringify(responseData))
       if(responseData){
         this.quizInfo = responseData;
+        console.log('kuis');
         //console.log(this.classInfo);
       }
     }, error =>{
@@ -236,7 +241,7 @@ export class DailyPage {
               "startdate" : assignInfo.startdate,
               "enddate" : assignInfo.enddate
             }
-            //console.log(req['nim'])
+            console.log(JSON.stringify(req))
         
             this.webService.post(this.webService.url + "add_assignment.php", JSON.stringify(req), null).subscribe(response => {
               //console.log(response["_body"]);

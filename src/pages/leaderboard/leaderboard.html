@@ -27,8 +27,8 @@
     </ion-item> -->
     <!-- <h3 text-center>Top 10 Players by Level</h3> -->
   </div>
-  <ion-list *ngFor="let leaderboard of byLevelInfo; let i =  index">
-    <ion-item>
+  <!-- <ion-list *ngFor="let leaderboard of byLevelInfo; let i =  index">
+    <ion-item *ngIf="leaderboard.nim == nim" style="background-color:cyan;">
       <ion-grid>
         <ion-row>
           <ion-col col-1>
@@ -47,6 +47,68 @@
         </ion-row>
       </ion-grid>
     </ion-item>
+    <ion-item *ngIf="leaderboard.nim != nim">
+      <ion-grid>
+        <ion-row>
+          <ion-col col-1>
+            <h1>{{i+1}}</h1>
+          </ion-col>
+          <ion-col col-2>
+            <img src="assets/avatar/{{leaderboard.avatar}}" style="width:80%;"/>
+          </ion-col>
+          <ion-col>
+            <h2 text-capitalize>{{leaderboard.nama}}</h2>
+            <h3>{{leaderboard.title}}</h3>
+          </ion-col>
+          <ion-col col-2>
+            <h2>Lv.{{leaderboard.level}}</h2>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+  </ion-list> -->
+
+  <ion-list no-lines>
+    <div *ngFor="let leaderboard of byLevelInfo; let i = index">
+    <ion-item *ngIf="leaderboard.nim == nim" style="background-color:cyan;">
+      <ion-grid>
+        <ion-row>
+          <ion-col col-1>
+            <h1>{{i+1}}</h1>
+          </ion-col>
+          <ion-col col-2>
+            <img src="assets/avatar/{{leaderboard.avatar}}" style="width:80%;"/>
+          </ion-col>
+          <ion-col>
+            <h2 text-capitalize>{{leaderboard.nama}}</h2>
+            <h3>{{leaderboard.title}}</h3>
+          </ion-col>
+          <ion-col col-2>
+            <h2>Lv.{{leaderboard.level}}</h2>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-item>
+    <ion-item *ngIf="leaderboard.nim != nim">
+      <ion-grid>
+          <ion-row>
+            <ion-col col-1>
+              <h1>{{i+1}}</h1>
+            </ion-col>
+            <ion-col col-2>
+                <img src="assets/avatar/{{leaderboard.avatar}}" style="width:80%;"/>
+            </ion-col>
+            <ion-col>
+              <h2 text-capitalize>{{leaderboard.nama}}</h2>
+              <h3>{{leaderboard.title}}</h3>
+            </ion-col>
+            <ion-col col-2>
+              <h2>Lv.{{leaderboard.level}}</h2>
+            </ion-col>
+          </ion-row>
+        </ion-grid>
+    </ion-item>
+    </div>
   </ion-list>
 
 </ion-content>

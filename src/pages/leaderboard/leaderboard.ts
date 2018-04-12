@@ -17,6 +17,7 @@ import { WebService } from '../../service/WebService';
 })
 export class LeaderboardPage {
   byLevelInfo: any;
+  nim: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     private authService: AuthService, private webService: WebService) {
@@ -42,6 +43,7 @@ export class LeaderboardPage {
       //console.log(JSON.stringify(responseData))
       if(responseData){
         this.byLevelInfo = responseData;
+        this.nim = this.authService.nim;;
       }
     }, error =>{
     })

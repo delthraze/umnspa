@@ -37,9 +37,7 @@ export class ProfilePage {
   ionViewWillEnter(){
     //this.presentLoading();
     this.getLevelInfo();
-    this.getUserInfo();
     this.getClassInfo();
-    this.dismissLoading();
   }
 
   getUserInfo(){
@@ -76,7 +74,8 @@ export class ProfilePage {
       //console.log(JSON.stringify(responseData))
       if(responseData){
         this.classInfo = responseData;
-        console.log(this.classInfo);
+        this.dismissLoading();
+        //console.log(this.classInfo);
       }
     }, error =>{
     })
@@ -94,6 +93,7 @@ export class ProfilePage {
       //console.log("Asd",JSON.stringify(responseData))
       if(responseData){
         this.exp_req = responseData;
+        this.getUserInfo();
         //console.log("exp",this.exp_req);
       }
     }, error =>{

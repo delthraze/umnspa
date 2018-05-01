@@ -1,3 +1,53 @@
 page-leaderboard {
-
+    ion-card{
+        position: relative;
+        border-radius: 15px !important;
+        height: 90px;
+    }
+    .leaderboard-index{
+        position: absolute;
+        font-size: 25pt;
+        left: 3%;
+        top: 30%;
+    }
+    .leaderboard-detail{
+        position: absolute;
+        left: 30%;
+        top: 32.5%;
+    }
+    .detail-name{
+        font-size: 12pt;
+        text-transform: uppercase;
+    }
+    .leaderboard-level{
+        position: absolute;
+        right: 6.5%;
+        top: 22.5%;
+    }
+    .leaderboard-avatar{
+        position: absolute;
+        width: 45px;
+        height: 45px;
+        border: 1px solid black;
+        border-radius: 100px;
+        top: 25%;
+        left: 13%;
+    }
+    .avatar-size{
+        position: absolute;
+        width:45%;
+        top: 17%;
+        left:27%;
+    }
+    .level-detail{
+        font-size: 25pt;
+    }
+    .pemisah-leaderboard{
+        position: absolute;
+        width: 1px;
+        border: 1px solid black;
+        height: 50px;
+        right: 21.5%;
+        top: 22.5%;
+    }
 }

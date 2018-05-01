@@ -1,0 +1,45 @@
+page-profile-settings {
+    ion-content{
+        background-color: rgba(0,0,0,0.5) !important;
+    }
+    ion-card{
+        border-radius: 10px !important;
+    }
+    ion-card-header{
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 14pt !important;
+        font-weight: bold;
+        margin-bottom: -15px;
+    }
+    ion-grid{
+        position: absolute;
+        left: 6%;
+    }
+    .modal-leaderboard{
+        position: fixed;
+        width: 90%;
+        top: 15%;
+        margin: auto;
+        background-color: lightgray;
+        border-radius: 10px;
+        padding-top: 7%;
+        height: 77%;
+        overflow-y: scroll;
+    }
+    .pic-badges{
+        width: 25%;
+    }
+    .grid-row{
+        // position: absolute;
+        margin: auto !important;
+        width:100%;
+        max-width: 100%;
+        display: inline-block;
+    }
+    .badge-collections{
+        margin-left: 10%;
+        margin-bottom: 5%;
+        font-size: 14pt;
+    }
+}

@@ -1,19 +1,43 @@
 page-login {
+    ion-content{
+        background-image: url('../assets/imgs/bekgron3.png') !important;
+        background-size: cover !important;
+        background-attachment: fixed !important;
+        background-position: center;
+        background-repeat: no-repeat;
+        background-size: cover !important;
+        // background: linear-gradient(white,#4286f4) !important;
+    }
+    ion-input{
+        background: transparent !important;
+        border: none;
+        color: black
+    }
+    ion-label{
+        color: white !important;
+        text-shadow: 1px 1px black
+    }
+    ion-item{
+        background: transparent !important;
+    }
     .logo{
         width: 80%;
+        background-color: rgba($color: white, $alpha: 0.7);
+        border-radius: 10px;
     }
     .formSignIn{
         margin-left:-15px;
-        width: 100%;
+        width: 102%;
     }
     .submitButton{
-        width: 96%;
+        margin-top:10px;
+        margin-left: 10px;
         height: 40px;
-        top: 10px;
-        left: 15px;
     }
     .detail{
-        margin-top : 20px;
-        text-align: center;
+        margin-top: 5px;
+        margin-left: -15px;
+        color: white;
+        text-shadow: 1px 1px black;
     }
 }

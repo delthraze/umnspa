@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, MenuController, NavController } from 'ionic-angular';
+import { Platform, MenuController, NavController, LoadingController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -14,12 +14,13 @@ import { DatabaseService } from '../service/DBService';
 import { SweetAlertService } from 'ng2-sweetalert2';
 import { Storage } from '@ionic/storage';
 import { OneSignal } from '@ionic-native/onesignal';
+import { StorePage } from '../pages/store/store';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
-  isLogin = false;
+  $isLogin = 0;
 
   $rootPage = LoginPage;
   rootPage: any = this.$rootPage;
@@ -27,22 +28,24 @@ export class MyApp {
   profilePage:any = ProfilePage;
   badgesPage:any = BadgesPage;
   leaderboardPage:any = LeaderboardPage;
+  storePage:any = StorePage;
   settingPage:any = SettingPage;
   loginPage:any = LoginPage;
+  loading:any;
 
   @ViewChild('sideMenuContent') nav: NavController;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, 
     private menuCtrl: MenuController, private dbSvc:DatabaseService, 
     private authService: AuthService, private storage: Storage,
-    private oneSignal: OneSignal) {
+    private oneSignal: OneSignal, public loadingCtrl: LoadingController) {
       setTimeout(() => {
         platform.ready().then(() => {
           // Okay, so the platform is ready and our plugins are available.
           // Here you can do any higher level native things you might need.
           statusBar.styleDefault();
           splashScreen.hide();
-      
+
           /*
           * Start One Signal
           */
@@ -62,7 +65,9 @@ export class MyApp {
           /*
           * End One Signal
           */
-    
+
+          this.presentLoading();
+          
           //sessions
           this.storage.get('sessions').then((value) => {
             //jika sessions terisi, maka sudah login
@@ -70,21 +75,41 @@ export class MyApp {
               this.authService.nim = value.nim;
               this.authService.email = value.email;
               this.authService.id_moodle = value.id_moodle;
-              this.isLogin = true;
+              this.authService.notification = value.notification;
+              this.$isLogin = 1;
               this.nav.setRoot(TabsPage);
             } else {
               this.nav.setRoot(LoginPage);
-              
+              this.$isLogin = 0;
             }
+            console.log('login',this.$isLogin);
+
+            this.dismissLoading();
           });
         });
-      }, 4000)
+      })
     
   }
 
   onLoad(page: any){
     this.nav.setRoot(page);
     this.menuCtrl.close();
+  }
+
+  presentLoading(){
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+
+    this.loading.present();
+
+    // setTimeout(() => {
+    //   loading.dismiss();
+    // }, 5000);
+  }
+
+  dismissLoading(){
+    this.loading.dismiss();
   }
 }
 

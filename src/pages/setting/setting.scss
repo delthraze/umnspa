@@ -1,3 +1,24 @@
 page-setting {
-
+    ion-list{
+        background: rgba($color: white, $alpha: 0.5) !important;
+        border: none !important;
+        color: black !important;
+        text-transform: uppercase !important;
+    }
+    ion-label{
+        font-size: 13pt;
+        background: transparent !important;
+    }
+    ion-item{
+        background: transparent !important;
+    }
+    .btn-logout{
+        width: 100%;
+        height: 40px !important;
+        border-radius: 5px !important;
+        background-color: #d30202;
+    }
+    ion-icon{
+        margin-right: 3%;
+    }
 }

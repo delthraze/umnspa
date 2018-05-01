@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, AlertController } from 'ionic-angular';
 import { AuthService } from '../../service/AuthService';
 import { WebService } from '../../service/WebService';
 import * as moment from 'moment';
@@ -17,18 +17,23 @@ import * as moment from 'moment';
   templateUrl: 'monthly.html',
 })
 export class MonthlyPage {
-    myDate: String = new Date().toISOString();
+  myDate: String = new Date().toISOString();
   classInfo: any;
+  assignmentInfo: any;
+  quizInfo: any;
   eventSource;
+  lockSwipeToPrev = true;
   viewTitle;
   isToday: boolean;
+  loading: any;
   calendar = {
       mode: 'month',
       currentDate: new Date()
   }; // these are the variable used by the calendar.
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
-    private authService: AuthService, private webService: WebService) {
+    private authService: AuthService, private webService: WebService,
+    private loadingCtrl: LoadingController, private alertCtrl: AlertController) {
   }
 
 //   ionViewDidLoad() {
@@ -38,7 +43,8 @@ export class MonthlyPage {
 
   ionViewWillEnter(){
     this.myDate = moment().format();
-      this.getClassInfo();
+    this.presentLoading();
+      this.getMonthlyInfo();
       //this.loadEvents();
   }
 
@@ -52,7 +58,16 @@ export class MonthlyPage {
   }
 
   onEventSelected(event) {
-      console.log('Event selected:' + event.startTime + '-' + event.endTime + ',' + event.title);
+      //console.log('Event selected:' + event.startTime + '-' + event.endTime + ',' + event.title);
+      let start = moment(event.startTime).format('LLLL');
+        let end = moment(event.endTime).format('LLLL');
+        
+        let alert = this.alertCtrl.create({
+        title: '' + event.title,
+        subTitle: 'From: ' + start + '<br>To: ' + end,
+        buttons: ['OK']
+        })
+        alert.present();
   }
 
   changeMode(mode) {
@@ -75,25 +90,46 @@ export class MonthlyPage {
       this.isToday = today.getTime() === event.getTime();
   }
 
-  getClassInfo(){
+  getMonthlyInfo(){
 
     //console.log(this.authService.nim);
     let req = {
-      'nim' : this.authService.nim
+      'nim' : this.authService.nim,
+      'id_moodle' : this.authService.id_moodle
     }
 
-    this.webService.post(this.webService.url + "get_class_monthly.php", JSON.stringify(req), null).subscribe(response => {
+    this.webService.post(this.webService.url + "get_data_monthly.php", JSON.stringify(req), null).subscribe(response => {
       //console.log(response["_body"]);
       let responseData = JSON.parse(response["_body"]);
       console.log(JSON.stringify(responseData))
       if(responseData){
-        this.classInfo = responseData;
+        this.classInfo = responseData["class"];
+        this.assignmentInfo = responseData["assignment"];
+        this.quizInfo = responseData["quiz"];
         this.loadEvents();
+        this.dismissLoading();
         //console.log(this.classInfo);
+        //console.log(this.assignmentInfo);
       }
     }, error =>{
     })
 
+  }
+
+  presentLoading(){
+    this.loading = this.loadingCtrl.create({
+      content: 'Please wait...'
+    });
+
+    this.loading.present();
+
+    // setTimeout(() => {
+    //   loading.dismiss();
+    // }, 5000);
+  }
+
+  dismissLoading(){
+    this.loading.dismiss();
   }
 
     onRangeChanged(ev) {
@@ -110,19 +146,61 @@ export class MonthlyPage {
         var events = [];
         for (let idx = 0; idx < this.classInfo.length; idx++) {
             const element = this.classInfo[idx];
-            console.log(element);
+            //console.log(element);
             var date = this.classInfo[idx]['tanggal'];
-            console.log(idx," ",date);
+            //console.log(idx," ",date);
             var startTime = new Date(date +' '+ this.classInfo[idx]['jam_mulai']);
             var endTime = new Date(date +' '+ this.classInfo[idx]['jam_selesai']);
             events.push({
-                title: this.classInfo[idx]['kode_mk'],
+                title: 'Class ' + this.classInfo[idx]['nama_mk'],
                 startTime: startTime,
                 endTime: endTime,
                 allDay: false
             });
         }
+
+        if(this.assignmentInfo != null){
+            for (let idx = 0; idx < this.assignmentInfo.length; idx++) {
+                const element = this.assignmentInfo[idx];
+                //console.log(this.assignmentInfo[idx]['startdate']);
+                //console.log(idx);
+                //isinya object object
+                //var date = this.assignmentInfo[idx]['tanggal'];
+                //console.log(idx," ",this.assignmentInfo[idx]['enddate']);
+                var startTime = new Date(this.assignmentInfo[idx]['startdate']);
+                var endTime = new Date(this.assignmentInfo[idx]['enddate']);
+                events.push({
+                    title: 'Deadline Assignment '+ this.assignmentInfo[idx]['name'],
+                    startTime: endTime,
+                    endTime: endTime,
+                    allDay: false
+                });
+            }
+        }
+
+        if(this.quizInfo != null){
+            for (let idx = 0; idx < this.quizInfo.length; idx++) {
+                const element = this.quizInfo[idx];
+                //console.log(this.quizInfo[idx]['startdate']);
+                //console.log(idx);
+                //isinya object object
+                //var date = this.assignmentInfo[idx]['tanggal'];
+                //console.log(idx," ",this.quizInfo[idx]['enddate']);
+                var startTime = new Date(this.quizInfo[idx]['startdate']);
+                var endTime = new Date(this.quizInfo[idx]['enddate']);
+                events.push({
+                    title: 'Quiz '+ this.quizInfo[idx]['name'],
+                    startTime: startTime,
+                    endTime: endTime,
+                    allDay: false
+                });
+            }
+        }
         
         return events;
+    }
+
+    test(){
+        moment('2018-04-24 19:57:00', "YYYYMMDD").fromNow();
     }
 }

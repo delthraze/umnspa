@@ -1,3 +1,91 @@
 page-daily {
-
+    ion-datetime:disabled{
+        color: red !important;
+    }
+    ion-card{
+        position: relative;
+        border-radius: 10px !important;
+        width:100% !important;
+        height: 15% !important;
+        margin-left:auto !important;
+    }
+    ion-card-header{
+        position : absolute;
+        left : 12%;
+        top  : 3% !important;
+        font-size: 10pt !important;
+    }
+    ion-card-content{
+        position : absolute;
+        left : 12%;
+        top  : 50%;
+        font-size: 11pt !important;
+    }
+    .matkul-panjang{
+        margin-bottom: 100px !important;
+    }
+    .daily-icon{
+        position: absolute;
+        left:4%;
+        top :22%;
+        font-size: 30pt;
+    }
+    .ruangan{
+        position: absolute;
+        left: 20px;
+        top:50px;
+    }
+    .matkul{
+        background-color: #ffff99;
+    }
+    .task{
+        background-color: pink;
+    }
+    .quiz{
+        background-color: lightblue;
+    }
+    .garis-bawah{
+        border: #668cff 1.5px solid;
+        width: 90%;
+        margin-left:5%;
+        margin-top: -5%
+    }
+    .time{
+        text-align:center;
+        margin-bottom:20px;
+    }
+    .calender{
+        position: absolute;
+        border: black 2.25px solid;
+        left:4%;
+        top :27%;
+        height: 35px;
+        width: 35px;
+    }
+    .month{
+        position: absolute;
+        font-size: 6pt;
+        left: 8%;
+        top: -4% !important;
+    }
+    .date{
+        position: absolute;
+        font-size: 11pt;
+        font-weight: bold;
+        top : 38%;
+        left: 25%;
+    }
+    .pemisah-calender{
+        position: absolute;
+        left: 0px;
+        top: 32%;
+        width: 99.5%;
+        border: red 1px solid;
+    }
+    .year{
+        position: absolute;
+        font-size: 6pt;
+        left:13.5px;
+        top:34.5px;
+    }
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App, MenuController } from 'ionic-angular';
 import { TabsPage } from '../tabs/tabs';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { AuthService } from '../../service/AuthService';
@@ -21,11 +21,19 @@ export class LoginPage {
   LoginForm: FormGroup;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
-    private authService: AuthService, private app:App) {
+    private authService: AuthService, private app:App,
+    private menuCtrl: MenuController) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
+  }
+
+  ionViewWillEnter(){
+    console.log("disabled");
+    this.menuCtrl.close();
+    this.menuCtrl.enable(false, 'myMenu');
+    this.menuCtrl.swipeEnable(false, 'myMenu');
   }
 
   ngOnInit(){

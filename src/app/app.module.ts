@@ -25,6 +25,9 @@ import { FormsModule } from '@angular/forms';
 import { IonicStorageModule } from '@ionic/storage';
 import { SettingsService } from '../service/SettingService';
 import { OneSignal } from '@ionic-native/onesignal';
+import { StorePage } from '../pages/store/store';
+import { UserProfilePage } from '../pages/user-profile/user-profile';
+import { ProfileSettingsPage } from '../pages/profile-settings/profile-settings';
 
 @NgModule({
   declarations: [
@@ -38,7 +41,10 @@ import { OneSignal } from '@ionic-native/onesignal';
     LeaderboardPage,
     BadgesPage,
     SettingPage,
-    ProgressBarComponent
+    StorePage,
+    UserProfilePage,
+    ProgressBarComponent,
+    ProfileSettingsPage
   ],
   imports: [
     BrowserModule,
@@ -60,7 +66,10 @@ import { OneSignal } from '@ionic-native/onesignal';
     LeaderboardPage,
     BadgesPage,
     SettingPage,
-    ProgressBarComponent
+    StorePage,
+    UserProfilePage,
+    ProgressBarComponent,
+    ProfileSettingsPage
   ],
   providers: [
     StatusBar,

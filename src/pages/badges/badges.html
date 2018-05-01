@@ -4,7 +4,7 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-<ion-header>
+<ion-header no-border>
 
   <ion-navbar>
     <button ion-button menuToggle>
@@ -83,12 +83,41 @@
     </ion-card>
   </div> -->
 
-  <ion-card *ngFor="let badges of badgeInfo">
+  <div *ngFor="let badges of badgeInfo">
+    <ion-card *ngIf="badges.status == 'N'" style="background-color:rgba(130, 130, 130, 0.5);">
       <img src="assets/badges/{{badges.image}}" class="bdgImg"/>
       <ion-card-header>{{badges.name}}</ion-card-header>
       <ion-card-content>{{badges.mission}}</ion-card-content>
       <progress-bar [progress]="badges.progress / badges.step_needed * 100" style="font-size:8pt;"></progress-bar>
-      <img src="assets/badges/test.png" class="claim" (click)="cobaClaim()"/>
+      <!-- <img src="assets/badges/test.png" class="claim" (click)="cobaClaim()"/> -->
       <!-- <button ion-button class="claim">claim</button> -->
-  </ion-card>
+    </ion-card>
+    <ion-card *ngIf="badges.status == 'InProgress'">
+      <img src="assets/badges/{{badges.image}}" class="bdgImg"/>
+      <ion-card-header>{{badges.name}}</ion-card-header>
+      <ion-card-content>{{badges.mission}}</ion-card-content>
+      <progress-bar [progress]="badges.progress / badges.step_needed * 100" style="font-size:8pt;"></progress-bar>
+    </ion-card>
+    <ion-card *ngIf="badges.status == 'Finish'">
+      <img src="assets/badges/{{badges.image}}" class="bdgImg"/>
+      <ion-card-header>{{badges.name}}</ion-card-header>
+      <ion-card-content>{{badges.mission}}</ion-card-content>
+      <button ion-button class="claim" (click)="cobaClaim(badges)">Claim Badge</button>
+      <!-- <progress-bar [progress]="badges.progress / badges.step_needed * 100" style="font-size:8pt;"></progress-bar> -->
+      <!-- <img src="assets/badges/test.png" class="claim" (click)="cobaClaim(badges)"/> -->
+      <!-- <button ion-button class="claim">claim</button> -->
+    </ion-card>
+    <ion-card *ngIf="badges.status == 'Claimed'">
+      <img src="assets/badges/{{badges.image}}" class="bdgImg"/>
+      <ion-card-header>{{badges.name}}</ion-card-header>
+      <ion-card-content>{{badges.mission}}</ion-card-content>
+      <div class="unlock-badge">
+        Unlocked @ {{(badges.unlock_date)?.substring(0,16)}}
+      </div>
+      <!-- <progress-bar [progress]="badges.progress / badges.step_needed * 100" style="font-size:8pt;"></progress-bar> -->
+      <!-- <img src="assets/badges/test.png" class="claim" (click)="cobaClaim()"/> -->
+      <!-- <button ion-button class="claim">claim</button> -->
+    </ion-card>
+  </div>
+  
 </ion-content>

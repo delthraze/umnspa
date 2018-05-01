@@ -1,21 +1,28 @@
 page-badges {
     ion-card{
         position: relative !important;
+        border-radius: 10px !important;
         height: 110px;
     }
     ion-card-header{
         position: absolute;
-        left: 55px;
+        font-size: 13pt !important;
+        font-weight: bold;
+        left: 25%;
+        top: 9% !important;
     }
     ion-card-content{
         position: absolute;
-        left: 55px;
-        top:40px;
+        font-size: 9pt !important;
+        left: 25%;
+        top: 40%;
+        line-height: 15px !important;
     }
     progress-bar{
         position: absolute;
-        top:60px;
-        width:100%;
+        top:60%;
+        left:27%;
+        width:70%;
         font-size:9pt !important;
         .progress-outer{
             height: 30px !important;
@@ -25,15 +32,24 @@ page-badges {
         }
     }
     .bdgImg{
-        width:15%;
+        width:25%;
         position: absolute;
-        left: 10px;
-        top:10px;
+        left: 3%;
+        top: 15%;
     }
     .claim{
+        background-color: #36b231;
         position: absolute;
-        right:15px;
-        top:10px;
-        width:30px;
+        border-radius: 50px;
+        left:27%;
+        top:65%;
+        width:70%;
+        height: 22%
     }    
+    .unlock-badge{
+        position: absolute;
+        font-weight: bold;
+        left:30%;
+        top:65%;
+    }
 }

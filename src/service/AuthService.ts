@@ -58,7 +58,8 @@ export class AuthService{
                         const session = {
                             nim: this.nim,
                             email: this.email,
-                            id_moodle: this.id_moodle
+                            id_moodle: this.id_moodle,
+                            notification: this.notification
                         }
                         this.storage.set('sessions', session);
                         onSuccess();
@@ -72,19 +73,6 @@ export class AuthService{
             });
         });
     }
-
-    // logout(){
-    //     this.email = "";
-    //     this.nim = "";
-    //     this.id_moodle = "";
-
-    //     const session = {
-    //         nim: this.nim,
-    //         email: this.email,
-    //         id_moodle: this.id_moodle
-    //     }
-    //     this.storage.set('sessions', session);
-    // }
 
     logout(onSuccess:Function){
         let url = this.webService.url + "logout.php";

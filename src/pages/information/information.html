@@ -1,0 +1,28 @@
+<!--
+  Generated template for the InformationPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header no-border>
+
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title text-center>Information</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+  <button ion-button class="full about-us" (click)="onLoad(aboutUsPage)">About US</button>
+  <button ion-button class="full how-to-use" (click)="onLoad(howToUsePage)">How To Use</button>
+  <div class="speech-bubble">
+    <div class="typewriter">
+      Hi! How can i help you?
+    </div>
+  </div>
+  <img src="assets/avatar_/hi.png" class="avatar-greet"/>
+</ion-content>

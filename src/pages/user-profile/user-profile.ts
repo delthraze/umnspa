@@ -27,6 +27,7 @@ export class UserProfilePage {
 
   ngOnInit(){
     this.profile;
+    console.log(this.profile.background);
     this.getBadgeInfo(this.profile.nim);
   }
 

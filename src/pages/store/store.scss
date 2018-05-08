@@ -1,29 +1,48 @@
 page-store {
-    .card-background-page {
 
-        ion-card {
-          position: relative;
-          text-align: center;
-          height: 200px !important;
-          border-radius: 10px;
-        }
+  .my-point{
+    position: fixed;
+    right: 10%;
+    top: 35%;
+  }
+  
+
+  .card-background-page {
+
+      ion-card {
+        position: relative;
+        text-align: center;
+        height: 305px !important;
+        border-radius: 10px;
+        //background-image: url('../assets/background/indonesia.png');
+        background-size: cover;
+        background-color: rgb(102, 172, 196);
+        background-repeat: no-repeat;
+        background-attachment: fixed;
+        background-position-y: 10px;
+      }
+    
+      .card-title {
+        position: absolute;
+        top: 36%;
+        font-size: 20pt;
+        width: 100%;
+        font-weight: bold;
+        color: white;
+        background-color:rgba($color: black, $alpha: 0.7);
+      }
       
-        .card-title {
-          position: absolute;
-          top: 36%;
-          font-size: 2.0em;
-          width: 100%;
-          font-weight: bold;
-          color: #fff;
-        }
-      
-        .card-subtitle {
-          font-size: 1.0em;
-          position: absolute;
-          top: 52%;
-          width: 100%;
-          color: #fff;
-        }
-      
-    }
+      .card-subtitle {
+        position: absolute;
+        top: 46.5%;
+        font-size: 13pt;
+        width: 100%;
+        color: white;
+        margin-top: 0.1%;
+        background-size: auto;
+        background-color:rgba($color: black, $alpha: 0.7);
+      }      
+  }
+
+    
 }

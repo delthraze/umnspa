@@ -56,8 +56,8 @@ export class ProfilePage {
 
   ionViewWillEnter(){
     //this.presentLoading();
-    this.getLevelInfo();
-    this.getClassInfo();
+    this.getLevelInfo(null, false);
+    this.getClassInfo(null, false);
   }
 
   getUserInfo(){
@@ -72,12 +72,12 @@ export class ProfilePage {
         console.log(JSON.stringify(responseData))
         if(responseData){
           this.userInfo = responseData[0];
-          this.profileName = responseData[0]['nama'];
-          this.profileNIM = responseData[0]['nim'];
-          this.profileProdi = responseData[0]['prodi'];
-          this.profileLevel = responseData[0]['level'];
-          this.profileTitle = responseData[0]['title'];
-          this.profilePoint = responseData[0]['point'];
+          // this.profileName = responseData[0]['nama'];
+          // this.profileNIM = responseData[0]['nim'];
+          // this.profileProdi = responseData[0]['prodi'];
+          // this.profileLevel = responseData[0]['level'];
+          // this.profileTitle = responseData[0]['title'];
+          // this.profilePoint = responseData[0]['point'];
           //this.loadProgress = this.userInfo.exp;
           this.loadProgress = responseData[0]['exp'];
           //console.log("exp_req",this.exp_req);
@@ -89,7 +89,7 @@ export class ProfilePage {
 
   }
 
-  getClassInfo(){
+  getClassInfo(refresher, isRefresh){
 
     let req = {
       'nim' : this.authService.nim
@@ -100,7 +100,11 @@ export class ProfilePage {
       //console.log(JSON.stringify(responseData))
       if(responseData){
         this.classInfo = responseData;
-        this.dismissLoading();
+
+        if (!isRefresh) this.dismissLoading();
+        else {
+          refresher.complete();
+        }
         //console.log(this.classInfo);
       }
     }, error =>{
@@ -108,12 +112,12 @@ export class ProfilePage {
 
   }
 
-  getLevelInfo(){
+  getLevelInfo(refresher, isRefresh){
 
     let req = {
       'nim' : this.authService.nim
     }
-    this.presentLoading();
+    if (!isRefresh) this.presentLoading();
     this.webService.post(this.webService.url + "update_level.php", JSON.stringify(req), null).subscribe(response => {
       console.log(response["_body"]);
       let responseData = JSON.parse(response["_body"]);
@@ -142,6 +146,13 @@ export class ProfilePage {
 
   dismissLoading(){
     this.loading.dismiss();
+  }
+
+  doRefresh(refresher) {
+    console.log('Begin async operation', refresher);
+
+    this.getLevelInfo(refresher, true);
+    this.getClassInfo(refresher, true);
   }
 
   openSettings(){

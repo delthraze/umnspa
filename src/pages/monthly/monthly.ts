@@ -59,12 +59,12 @@ export class MonthlyPage {
 
   onEventSelected(event) {
       //console.log('Event selected:' + event.startTime + '-' + event.endTime + ',' + event.title);
-      let start = moment(event.startTime).format('LLLL');
+        let start = moment(event.startTime).format('LLLL');
         let end = moment(event.endTime).format('LLLL');
         
         let alert = this.alertCtrl.create({
         title: '' + event.title,
-        subTitle: 'From: ' + start + '<br>To: ' + end,
+        subTitle: event.matkul + '<br>From: ' + start + '<br>To: ' + end,
         buttons: ['OK']
         })
         alert.present();
@@ -155,7 +155,8 @@ export class MonthlyPage {
                 title: 'Class ' + this.classInfo[idx]['nama_mk'],
                 startTime: startTime,
                 endTime: endTime,
-                allDay: false
+                allDay: false,
+                matkul: this.classInfo[idx]['nama_mk']
             });
         }
 
@@ -170,10 +171,11 @@ export class MonthlyPage {
                 var startTime = new Date(this.assignmentInfo[idx]['startdate']);
                 var endTime = new Date(this.assignmentInfo[idx]['enddate']);
                 events.push({
-                    title: 'Deadline Assignment '+ this.assignmentInfo[idx]['name'],
-                    startTime: endTime,
+                    title: 'Assignment '+ this.assignmentInfo[idx]['name'],
+                    startTime: startTime,
                     endTime: endTime,
-                    allDay: false
+                    allDay: false,
+                    matkul: this.assignmentInfo[idx]['nama_mk']
                 });
             }
         }
@@ -192,7 +194,8 @@ export class MonthlyPage {
                     title: 'Quiz '+ this.quizInfo[idx]['name'],
                     startTime: startTime,
                     endTime: endTime,
-                    allDay: false
+                    allDay: false,
+                    matkul: this.quizInfo[idx]['nama_mk']
                 });
             }
         }

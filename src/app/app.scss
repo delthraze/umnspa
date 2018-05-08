@@ -27,4 +27,27 @@ ion-content{
     opacity: 10 !important;
 }
 
+.tooltip{
+    z-index: 1 !important;
+}
+
+@font-face{
+    font-family: "mrf lemonberry";
+    src: url('../assets/fonts/MRF-Lemonberry-Sans.ttf');
+}
+@font-face{
+    font-family: "cafe francoise";
+    src: url('../assets/fonts/Café-Françoise.ttf');
+}
+
+@font-face{
+    font-family: "rudiment";
+    src: url('../assets/fonts/Rudiment.ttf');
+}
+
+// .toast-style{
+//     width: 100%;
+//     position: center;
+// }
+
 

@@ -17,6 +17,14 @@
 
 
 <ion-content padding>
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
   <div center>
     <!-- <ion-item>
       <ion-label>Filter</ion-label>
@@ -27,58 +35,21 @@
     </ion-item> -->
     <!-- <h3 text-center>Top 10 Players by Level</h3> -->
   </div>
-  <!-- <ion-list *ngFor="let leaderboard of byLevelInfo; let i =  index">
-    <ion-item *ngIf="leaderboard.nim == nim" style="background-color:cyan;">
-      <ion-grid>
-        <ion-row>
-          <ion-col col-1>
-            <h1>{{i+1}}</h1>
-          </ion-col>
-          <ion-col col-2>
-            <img src="assets/avatar/{{leaderboard.avatar}}" style="width:80%;"/>
-          </ion-col>
-          <ion-col>
-            <h2 text-capitalize>{{leaderboard.nama}}</h2>
-            <h3>{{leaderboard.title}}</h3>
-          </ion-col>
-          <ion-col col-2>
-            <h2>Lv.{{leaderboard.level}}</h2>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-item>
-    <ion-item *ngIf="leaderboard.nim != nim">
-      <ion-grid>
-        <ion-row>
-          <ion-col col-1>
-            <h1>{{i+1}}</h1>
-          </ion-col>
-          <ion-col col-2>
-            <img src="assets/avatar/{{leaderboard.avatar}}" style="width:80%;"/>
-          </ion-col>
-          <ion-col>
-            <h2 text-capitalize>{{leaderboard.nama}}</h2>
-            <h3>{{leaderboard.title}}</h3>
-          </ion-col>
-          <ion-col col-2>
-            <h2>Lv.{{leaderboard.level}}</h2>
-          </ion-col>
-        </ion-row>
-      </ion-grid>
-    </ion-item>
-  </ion-list> -->
+  
 
   <div *ngFor="let leaderboard of byLevelInfo" (click)="createModal(leaderboard)">
     <ion-card *ngIf="leaderboard.nim == nim" style="background-color:lightsalmon;">
-      <div class="leaderboard-index">
-        {{leaderboard.index}}.
+      <div class="leaderboard-index-border">
+        <div class="leaderboard-index">
+          {{leaderboard.index}}
+        </div>
       </div>
       <div class="leaderboard-avatar">
           <img src="assets/avatar_/{{leaderboard.avatar}}" class="avatar-size"/>
       </div>
       <div class="leaderboard-detail">
         <div class="detail-name">{{leaderboard.nama}}</div>
-        <div>{{leaderboard.title}}</div>
+        <div>"{{leaderboard.title}}"</div>
       </div>
       <div class="pemisah-leaderboard"></div>
       <div class="leaderboard-level">
@@ -87,15 +58,17 @@
       </div>
     </ion-card>
     <ion-card *ngIf="leaderboard.nim != nim">
-      <div class="leaderboard-index">
-        {{leaderboard.index}}.
+      <div class="leaderboard-index-border">
+        <div class="leaderboard-index">
+          {{leaderboard.index}}
+        </div>
       </div>
       <div class="leaderboard-avatar">
           <img src="assets/avatar_/{{leaderboard.avatar}}" class="avatar-size"/>
       </div>
       <div class="leaderboard-detail">
         <div class="detail-name">{{leaderboard.nama}}</div>
-        <div>{{leaderboard.title}}</div>
+        <div>"{{leaderboard.title}}"</div>
       </div>
       <div class="pemisah-leaderboard"></div>
       <div class="leaderboard-level">

@@ -28,6 +28,11 @@ import { OneSignal } from '@ionic-native/onesignal';
 import { StorePage } from '../pages/store/store';
 import { UserProfilePage } from '../pages/user-profile/user-profile';
 import { ProfileSettingsPage } from '../pages/profile-settings/profile-settings';
+import { TooltipsModule } from 'ionic-tooltips';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { InformationPage } from '../pages/information/information';
+import { HowToUsePage } from '../pages/how-to-use/how-to-use';
+import { AboutUsPage } from '../pages/about-us/about-us';
 
 @NgModule({
   declarations: [
@@ -44,13 +49,18 @@ import { ProfileSettingsPage } from '../pages/profile-settings/profile-settings'
     StorePage,
     UserProfilePage,
     ProgressBarComponent,
-    ProfileSettingsPage
+    ProfileSettingsPage,
+    InformationPage,
+    HowToUsePage,
+    AboutUsPage
   ],
   imports: [
     BrowserModule,
     NgCalendarModule,
     FormsModule,
     HttpModule,
+    TooltipsModule,
+    BrowserAnimationsModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot()
   ],
@@ -69,7 +79,10 @@ import { ProfileSettingsPage } from '../pages/profile-settings/profile-settings'
     StorePage,
     UserProfilePage,
     ProgressBarComponent,
-    ProfileSettingsPage
+    ProfileSettingsPage,
+    InformationPage,
+    HowToUsePage,
+    AboutUsPage
   ],
   providers: [
     StatusBar,

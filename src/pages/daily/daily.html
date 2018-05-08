@@ -15,13 +15,13 @@
 
 <ion-content padding>
   <ion-refresher (ionRefresh)="doRefresh($event)">
-      <ion-refresher-content
-        pullingIcon="arrow-dropdown"
-        pullingText="Pull to refresh"
-        refreshingSpinner="circles"
-        refreshingText="Refreshing...">
-      </ion-refresher-content>
-    </ion-refresher>
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
   <div class="time">
       <h4 ion-text><ion-datetime displayFormat="DDDD, D MMMM YYYY" [(ngModel)]="myDate" disabled></ion-datetime></h4>
       <!-- <div class="garis-bawah"></div> -->
@@ -53,6 +53,10 @@
     </ng-template>
     <ion-card-content>
       {{assign.end_hour}}
+      <!-- <ion-datetime displayFormat="DD HH mm" [(ngModel)]="assignInfo.waktu" disabled></ion-datetime> -->
+      <!-- {{tes_time(assign.enddate)}} -->
+      <!-- {{assignInfo.waktu}} -->
+      {{intervaltime(assign.id_elearning,assign.enddate)}}
     </ion-card-content>
   </ion-card>
   <ion-card class="quiz" *ngFor="let quiz of quizInfo" (click)="do_quiz(quiz)">

@@ -26,6 +26,7 @@ export class DailyPage {
   quizInfo: any;
   loading: any;
   limit : 2;
+  countday: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     private authService: AuthService, private webService: WebService,
@@ -45,20 +46,20 @@ export class DailyPage {
     this.menuCtrl.close();
     this.menuCtrl.enable(true, 'myMenu');
     this.menuCtrl.swipeEnable(true, 'myMenu');
-    this.getClassInfo();
+    this.getClassInfo(null, false);
     this.getAssignmentInfo();
-    this.getQuizInfo();
+    this.getQuizInfo(null, false);
     this.getLevelInfo();
     //this.tes_time();
     //console.log(this.myDate); 
   }
 
-  getClassInfo(){
+  getClassInfo(refresher, isRefresh){
     //console.log(this.authService.nim);
     let req = {
       'nim' : this.authService.nim
     }
-    this.presentLoading();
+    if (!isRefresh) this.presentLoading();
     this.webService.post(this.webService.url + "get_today_class.php", JSON.stringify(req), null).subscribe(response => {
       //console.log(response["_body"]);
       let responseData = JSON.parse(response["_body"]);
@@ -87,6 +88,14 @@ export class DailyPage {
       console.log(JSON.stringify(responseData))
       if(responseData){
         this.assignInfo = responseData;
+        var nowtime = new Date().getTime();
+        // for(var i = 0; i < responseData.length; i++){
+        //   var endtime = new Date(this.assignInfo[i]['enddate']).getTime();
+        //   this.assignInfo[i]['waktu'] = new Date(endtime - nowtime).toISOString();
+        //   console.log('enddate',this.assignInfo[i]['waktu']);
+        // }
+        //console.log('ini respon',responseData[0]['enddate']);
+        //this.assignInfo['countdown'] = this.tes_time(responseData['enddate']);
         console.log('tugas');
         //console.log(this.classInfo);
       }
@@ -96,7 +105,40 @@ export class DailyPage {
     })
   }
 
-  getQuizInfo(){
+  intervaltime(id,enddate){
+    var datenow = new Date();
+    var nowtime = new Date().getTime();
+    var endday = (enddate.substring(0, 2));
+    var endmonth = (enddate.substring(3, 5));
+    var endyear = (enddate.substring(6, 10));
+    var endhour = (enddate.substring(11, 16));
+    //var endtime = new Date(enddate.substring(0, 11)).getTime();
+    //var endtime = new Date("05-05-2018 05:00").getTime();
+    var endtime = new Date(endmonth + "-" + endday + "-" + endyear + " " + endhour).getTime();
+    console.log('id ',id);
+
+    // console.log("\tnow date: "+datenow);
+    // console.log("\tend date: "+enddate);
+    // console.log("\tend day: "+endday);
+    // console.log("\tend mon: "+endmonth);
+    // console.log("\tend year: "+endyear);
+    // console.log("\tend hour: "+endhour);
+    // console.log("\tnow time: "+nowtime);
+    // console.log("\tend time: "+endtime);
+    var intervaltime = new Date(endtime - nowtime).toISOString();
+    console.log('beda',intervaltime);
+    this.countday = intervaltime.substring(8,10);
+    if(this.countday > 1){
+      var countday2 = this.countday - 1;
+      var intervaltime_ = '(' + countday2 + 'd ' + intervaltime.substring(11,13) + 'h ' + intervaltime.substring(14,16) + 'm left)';  
+    } else{
+      var intervaltime_ = '(0d ' + intervaltime.substring(11,13) + 'h ' + intervaltime.substring(14,16) + 'm left)';
+    }
+
+    return intervaltime_;
+  }
+
+  getQuizInfo(refresher, isRefresh){
     
     let req = {
       'id_moodle' : this.authService.id_moodle,
@@ -111,19 +153,23 @@ export class DailyPage {
         this.quizInfo = responseData;
         console.log('kuis');
         //console.log(this.classInfo);
+        
+        if (isRefresh){
+          refresher.complete();
+        }
       }
     }, error =>{
     })
+    if (!isRefresh) this.dismissLoading();
 
-    this.dismissLoading();
   }
 
   do_assignments(assignInfo){
     swal({
-      title: "Are you sure?",
-      text: "Are you sure that you have already submit the assignment?",
+      title: "Submit Assignment",
+      text: "Are you already submit "+ assignInfo.name +" ?",
       icon: 'warning',
-      buttons: ["Cancel", "Click me!"],
+      buttons: ["Cancel", "Yes!"],
     })
     .then(willDelete => {
       if (willDelete) {
@@ -171,7 +217,7 @@ export class DailyPage {
               ]
             });
           }
-          swal("Submited!", "You have submited your assignment", "success");
+          swal("Success!", "You have submited your assignment", "success");
         }, error =>{
           swal("Unsuccessful", "Please try again", "failed");
         })        
@@ -181,10 +227,10 @@ export class DailyPage {
   
   do_class(classInfo){
     swal({
-      title: "Are you sure?",
-      text: "Are you sure that you already at " + classInfo.ruangan + " ?",
+      title: "Attend Class",
+      text: "Are you already at " + classInfo.ruangan + " ?",
       icon : 'warning',
-      buttons: ["Cancel", "Click me!"],
+      buttons: ["Cancel", "Yes!"],
     })
     .then(willDelete => {
       if (willDelete) {
@@ -229,7 +275,7 @@ export class DailyPage {
           //     ]
           //   });
           // }
-          swal("Attended!", "You have attend your class", "success");
+          swal("Success!", "You have attended your class", "success");
         }, error =>{
           swal("Unsuccessful", "Please try again", "failed");
         })        
@@ -239,10 +285,10 @@ export class DailyPage {
 
   do_quiz(quizInfo){
     swal({
-      title: "Are you sure?",
-      text: "Are you sure that you do your quiz?",
+      title: "Attempt Quiz",
+      text: "Are you already finish "+ quizInfo.name +" ?",
       icon: "warning",
-      buttons: ["Cancel", "Sure!"],
+      buttons: ["Cancel", "Yes!"],
     })
     .then(willDelete => {
       if (willDelete) {
@@ -289,7 +335,7 @@ export class DailyPage {
               ]
             });
           }
-          swal("Done!", "You have do your quiz", "success");
+          swal("Success!", "You have finished your quiz", "success");
         }, error =>{
           swal("Unsuccessful", "Please try again", "failed");
         })        
@@ -336,31 +382,37 @@ export class DailyPage {
   doRefresh(refresher) {
     console.log('Begin async operation', refresher);
 
-    setTimeout(() => {
-      console.log('Async operation has ended');
-      refresher.complete();
-    }, 2000);
+    this.myDate = moment().format();
+    this.getClassInfo(refresher, true);
+    this.getAssignmentInfo();
+    this.getQuizInfo(refresher, true);
+    this.getLevelInfo();
   }
 
-  tes_time(){
-    var nowtime = new Date().getTime();
-    var testime = new Date('2018-04-20').getTime();;
+  tes_time(waktu){
 
-    console.log('now',nowtime);
-    console.log('testime',testime);
+    var nowtime = new Date().getTime();
+     var testime = new Date('2018-05-10').getTime();
+    //var testime = new Date(waktu).getTime();
+
+    //console.log('now',nowtime);
+    //console.log('testime',testime);
+    //console.log('waktu',waktu);
 
     var difftime = testime - nowtime;
 
-    console.log('diff',difftime);
+    // console.log('diff',difftime);
 
     var interval = 1000;
+    
 
-    setInterval(function() {
-      var duration = moment.duration(difftime, 'milliseconds');
-      difftime -= 1000;
-      console.log(duration.days() + ':' + duration.hours() + ":" + duration.minutes() + ":" + duration.seconds())
-    }, interval);
-  
+    // setInterval(function() {
+    //   var duration = moment.duration(difftime, 'milliseconds');
+    //   difftime -= 1000;
+    // //   console.log(duration.days() + ' Days ' + duration.hours() + " Hours " + duration.minutes() + " Minutes " + duration.seconds() + " Seconds Left")
+    // // }, interval);
+    console.log('difftime',difftime);
+    //return "hai janssen "+difftime;
   }
 
   do_assignment(assignInfo) {

@@ -4,11 +4,21 @@ page-leaderboard {
         border-radius: 15px !important;
         height: 90px;
     }
-    .leaderboard-index{
+    .leaderboard-index-border{
         position: absolute;
-        font-size: 25pt;
+        border-radius: 100px;
+        border: 1px solid black;
+        background-color: rgba($color: lightblue, $alpha: 0.3);
+        height: 30px;
+        width: 30px;
         left: 3%;
-        top: 30%;
+        top: 10%;
+    }
+    .leaderboard-index{
+        font-size: 9pt;
+        text-align: center;
+        margin-left: -1px;
+        margin-top: 7px;
     }
     .leaderboard-detail{
         position: absolute;

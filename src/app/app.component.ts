@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Platform, MenuController, NavController, LoadingController } from 'ionic-angular';
+import { Platform, MenuController, NavController, LoadingController, ToastController } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
@@ -15,6 +15,7 @@ import { SweetAlertService } from 'ng2-sweetalert2';
 import { Storage } from '@ionic/storage';
 import { OneSignal } from '@ionic-native/onesignal';
 import { StorePage } from '../pages/store/store';
+import { InformationPage } from '../pages/information/information';
 
 @Component({
   templateUrl: 'app.html'
@@ -31,20 +32,34 @@ export class MyApp {
   storePage:any = StorePage;
   settingPage:any = SettingPage;
   loginPage:any = LoginPage;
+  informationPage:any =  InformationPage;
   loading:any;
+  public counter=0;
 
   @ViewChild('sideMenuContent') nav: NavController;
 
   constructor(platform: Platform, statusBar: StatusBar, splashScreen: SplashScreen, 
     private menuCtrl: MenuController, private dbSvc:DatabaseService, 
     private authService: AuthService, private storage: Storage,
-    private oneSignal: OneSignal, public loadingCtrl: LoadingController) {
+    private oneSignal: OneSignal, public loadingCtrl: LoadingController,
+    private toastCtrl: ToastController) {
       setTimeout(() => {
         platform.ready().then(() => {
           // Okay, so the platform is ready and our plugins are available.
           // Here you can do any higher level native things you might need.
           statusBar.styleDefault();
           splashScreen.hide();
+
+          platform.registerBackButtonAction(() => {
+            if (this.counter == 0) {
+              this.counter++;
+              this.presentToast();
+              setTimeout(() => { this.counter = 0 }, 3000)
+            } else {
+              // console.log("exitapp");
+              platform.exitApp();
+            }
+          }, 0)
 
           /*
           * Start One Signal
@@ -110,6 +125,16 @@ export class MyApp {
 
   dismissLoading(){
     this.loading.dismiss();
+  }
+
+  presentToast() {
+    let toast = this.toastCtrl.create({
+      message: "Press again to exit",
+      duration: 3000,
+      position: "bottom",
+      cssClass: "toast-style"
+    });
+    toast.present();
   }
 }
 

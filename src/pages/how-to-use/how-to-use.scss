@@ -1,0 +1,50 @@
+page-how-to-use {
+    .logo-spa-besar{
+        // position: fixed;
+        // top: 5%;
+        // left: 25%;
+
+        background-color: rgba($color: white, $alpha: 0.8);
+        border-radius: 10px;
+
+        width: 50%;
+    }
+    .logo-spa{
+        position: fixed;
+        bottom: 5%;
+        left: 3%;
+
+        width: 30%;
+    }
+
+    .ket-how-to{
+        position: fixed;
+        bottom: 5%;
+        border: 8px solid #8B4513;
+        border-radius: 10px;
+        height: 150px !important;
+        width: 90%;
+        background-color: #FFDEAD;
+        margin: auto;
+    }
+    .isi-ket-how-to-1{
+        position: absolute;
+        top: 10%;
+        left: 3%;
+        word-wrap: break-word;
+        // font-family: "cafe francoise";
+    }
+    .isi-ket-how-to-2{
+        position: absolute;
+        top: 35%;
+        left:25%;
+        word-wrap: break-word;
+    }
+    .isi-ket-how-to-3{
+        position: absolute;
+        top: 47%;
+        left:27%;
+        word-wrap: break-word;
+        font-size: 13pt;
+    }
+}

@@ -1,0 +1,56 @@
+page-about-us {
+    .title-information{
+        text-align: center;
+        font-size: 14pt;
+        margin-bottom: 50px;
+    }
+
+    .outer-box{
+        position: relative;
+        border: 8px solid #8B4513;
+        border-radius: 10px;
+        height: 450px !important;
+        width: 95%;
+        background-color: #FFDEAD;
+        margin: auto;
+    }
+    .mini-box{
+        position: absolute;
+        left: 28%;
+        top: -5%;
+        width: 45%;
+        height: 45px;
+        padding-top: 3px;
+        border: 8px solid black;
+        border-radius: 5px;
+        background-color: black;
+        color: white;
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 16pt;
+    }
+    .isi-content{
+        position: absolute;
+        top: 10%;
+        left: 17%;
+        // font-family: "cafe francoise";
+    }
+    .judul-isi-content{
+        text-align: center;
+        font-size: 14pt;
+        margin-bottom: 10px;
+    }
+    .pemisah{
+        width: 200px;
+        border: 1px black solid;
+        margin-bottom: 20px;
+    }
+    .isi-isinya-content{
+        width: 100%;
+        font-size: 20pt;
+        text-align: center;
+    }
+    .jeda{
+        margin-bottom: 50px;
+    }
+}

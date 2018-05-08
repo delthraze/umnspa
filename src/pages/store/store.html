@@ -11,22 +11,33 @@
       <ion-icon name="menu"></ion-icon>
     </button>
     <ion-title text-center>Store</ion-title>
-    <ion-icon name="cash" item-start style="color:#3d703b"></ion-icon>
-      {{userInfo.point}}
+    <div class="my-point">
+      <ion-icon name="cash" style="color: yellow"></ion-icon>
+      <span style="color: white;">{{userInfo.point | currency:' ':true:'1.0-0'}}</span>
+    </div>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content class="card-background-page">
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
   <div *ngFor="let background of storeInfo">
-    <ion-card id="component-id" class="store-card" [style.backgroundColor]="background.image" (click)="buyBackground(background)" *ngIf="background.price <= userInfo.point">
+    <ion-card id="component-id" class="store-card" [style.backgroundImage]="'url(assets/background/' + background.image + ')'" *ngIf="background.status == 'not'" (click)="buyBackground(background, userInfo.point)">
+      <!-- <img src="assets/background/basket_2.png"/> -->
       <div class="card-title">{{background.name}}</div>
-      <div class="card-subtitle"><ion-icon name="cash"></ion-icon>{{background.price}}</div>
+      <div class="card-subtitle"><ion-icon name="cash"></ion-icon>{{background.price | currency:' ':true:'1.0-0'}}</div>
     </ion-card>
-    <ion-card id="component-id" class="store-card" [style.backgroundColor]="background.image" *ngIf="background.price > userInfo.point">
+    <ion-card id="component-id" class="store-card" [style.backgroundImage]="'url(assets/background/'+ background.image + ')'" *ngIf="background.status == 'owned'" (click)="test(background)">
       <div class="card-title">{{background.name}}</div>
-      <div class="card-subtitle"><ion-icon name="cash"></ion-icon>{{background.price}}</div>
+      <div class="card-subtitle"><ion-icon name="checkmark"></ion-icon></div>
     </ion-card>
   </div>
 </ion-content>

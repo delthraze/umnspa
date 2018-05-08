@@ -39,13 +39,13 @@ page-daily {
         background-color: #ffff99;
     }
     .task{
-        background-color: pink;
+        background-color: rgb(197, 255, 192);
     }
     .quiz{
-        background-color: lightblue;
+        background-color: rgb(255, 221, 221);
     }
     .garis-bawah{
-        border: #668cff 1.5px solid;
+        border: #030405 1.5px solid;
         width: 90%;
         margin-left:5%;
         margin-top: -5%
@@ -65,8 +65,8 @@ page-daily {
     .month{
         position: absolute;
         font-size: 6pt;
-        left: 8%;
-        top: -4% !important;
+        left: 15%;
+        top: -1% !important;
     }
     .date{
         position: absolute;

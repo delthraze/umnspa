@@ -16,14 +16,22 @@
 </ion-header>
 
 
-<ion-content padding>
-  <ion-card id="component-id" class="profile-card" [style.backgroundColor]="userInfo.background">
+<ion-content class="card-background-page">
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
+  <ion-card id="component-id" class="profile-card" [style.backgroundImage]="'url(assets/background/' + userInfo.background + ')'">
     <div class="bordir-avatar">
       <img src="assets/avatar_/{{userInfo.avatar}}" class="avatar-profile"/>
     </div>
     <div class="profile-point">
       <ion-icon name="cash" item-start style="color:#3d703b"></ion-icon>
-      {{userInfo.point}}
+      {{userInfo.point | currency:' ':true:'1.0-0'}}
     </div>
     <!-- <div class="profile-setting" (click)="openSettings()">
       <ion-icon name="settings" item-start style="color:#3d703b"></ion-icon>
@@ -43,7 +51,9 @@
         <div class="profile-details">Lv.{{userInfo.level}}</div>
       </ion-card-content>
     </div>
-    <progress-bar [progress]="loadProgress" style="font-size:8pt;"></progress-bar>
+    <div class="progressbar">
+      <progress-bar [progress]="loadProgress"></progress-bar>
+    </div>
   </ion-card>
   <div *ngFor="let class of classInfo">
     <ion-card class="schedule-card">

@@ -17,71 +17,14 @@
 
 
 <ion-content padding>
-  <!-- <div>
-    <ion-card>
-      <ion-card-content>
-        <ion-grid>
-          <ion-row>
-            <ion-col col-2>
-                <img src="http://localhost/umnspa/src/badges/test.png"/>
-            </ion-col>
-            <ion-col>
-                <ion-row>
-                  <ion-col>
-                    <h3>nama</h3>
-                  </ion-col>
-                  <ion-col>
-                    <h4>unlocked 1 Jan 2018@10:10am</h4>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <h4>deskripsi badges</h4>
-                </ion-row>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-card-content>
-    </ion-card>
-  </div> -->
-  <!-- <div *ngFor="let badges of badgeInfo">
-    <ion-card>
-      <ion-card-content>
-        <ion-grid>
-          <ion-row>
-            <ion-col col-2>
-                <img src="assets/badges/{{badges.image}}"/>
-            </ion-col>
-            <ion-col *ngIf="badges.status != 'Claimed'">
-                <ion-row>
-                  <h3>{{badges.name}}</h3>
-                </ion-row>
-                <ion-row>
-                  <h5>{{badges.mission}}</h5>
-                </ion-row>
-            </ion-col>
-            <ion-col *ngIf="badges.status == 'Claimed'">
-                <ion-row>
-                  <ion-col>
-                    <h3>{{badges.name}}</h3>
-                  </ion-col>
-                  <ion-col>
-                    <h4>unlocked {{badges.unlock_date}}</h4>
-                  </ion-col>
-                </ion-row>
-                <ion-row>
-                  <h4>{{badges.description}}</h4>
-                </ion-row>
-            </ion-col>
-          </ion-row>
-          <ion-row>
-            <ion-col col-span>
-              <progress-bar [progress]="badges.progress / badges.step_needed * 100" style="font-size:8pt;"></progress-bar>
-            </ion-col>
-          </ion-row>
-        </ion-grid>
-      </ion-card-content>
-    </ion-card>
-  </div> -->
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+      pullingIcon="arrow-dropdown"
+      pullingText="Pull to refresh"
+      refreshingSpinner="circles"
+      refreshingText="Refreshing...">
+    </ion-refresher-content>
+  </ion-refresher>
 
   <div *ngFor="let badges of badgeInfo">
     <ion-card *ngIf="badges.status == 'N'" style="background-color:rgba(130, 130, 130, 0.5);">

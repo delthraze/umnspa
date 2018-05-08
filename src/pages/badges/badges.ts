@@ -32,12 +32,13 @@ export class BadgesPage {
   }
 
   ionViewWillEnter(){
-    this.presentLoading();
-    this.getBadgeInfo();
+    this.getBadgeInfo(null, false);
   }
 
-  getBadgeInfo(){
+  getBadgeInfo(refresher, isRefresh){
     //console.log(this.authService.nim);
+    if (!isRefresh) this.presentLoading();
+
     let req = {
       'nim' : this.authService.nim
     }
@@ -50,7 +51,10 @@ export class BadgesPage {
         this.badgeInfo = responseData;
         //console.log(this.classInfo);
         this.getLevelInfo();
-        this.dismissLoading();
+        if (!isRefresh) this.dismissLoading();
+        else {
+          refresher.complete();
+        }
       }
     }, error =>{
       console.log(error);
@@ -72,7 +76,7 @@ export class BadgesPage {
       let responseData = JSON.parse(response["_body"]);
       console.log(JSON.stringify(responseData))
       if(responseData){
-        this.getBadgeInfo();
+        this.getBadgeInfo(null, false);
       }
     }, error =>{
       console.log(error);
@@ -98,6 +102,12 @@ export class BadgesPage {
     }, error =>{
     })
 
+  }
+
+  doRefresh(refresher) {
+    console.log('Begin async operation', refresher);
+
+    this.getBadgeInfo(refresher, true);
   }
 
   presentLoading(){

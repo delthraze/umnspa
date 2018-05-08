@@ -6,32 +6,44 @@
 -->
 
 
-<ion-content padding>
+<ion-content class="card-background-page">
   <div class="modal-leaderboard">
     <div class="button-close" (click)="closeModal()">X</div>
     <div>
-      <ion-card id="component-id" class="profile-card" [style.backgroundColor]="profile.background">
+      <ion-card id="component-id" class="profile-card" [style.backgroundImage]="'url(assets/background/' + profile.background + ')'">
         <div class="bordir-avatar">
           <img src="assets/avatar_/{{profile.avatar}}" class="avatar-profile"/>
         </div>
-        <ion-card-header>{{profile.nama}}</ion-card-header>
-        <ion-card-content>
-          <div class="profile-details">Lv.{{profile.level}}</div>
-          <div class="profile-details">{{profile.title}}</div>
-        </ion-card-content>
+        <div class="bg-profile-details">
+          <ion-card-header>{{profile.nama}}</ion-card-header>
+          <ion-card-content>
+            <div class="profile-details">Lv.{{profile.level}}</div>
+            <div class="profile-details">"{{profile.title}}"</div>
+          </ion-card-content>
+        </div>
       </ion-card>
     </div>
-    <div class="badge-collections">
-      Badge Collections
+    <div *ngIf="badgeInfo == '';else second" class="empty-badges">
+      <div class="empty-badges-name">{{profile.nama}}</div>
+      <div class="empty-badges-detail">Doesn't Have any Badge Yet</div>
     </div>
-    <div class="garis-bawah"></div>
+    <ng-template #second>
+      <div class="badge-collections">
+        Badge Collections
+      </div>
+      <div class="garis-bawah"></div>
+    </ng-template>
     <ion-grid>
       <ion-row class="grid-row">
         <ion-col width-33 *ngFor="let badge of badgeInfo" align-self-start>
-          <img src="assets/badges/{{badge.image}}" class="pic-badges" (press)="press()" (touchend)="touched()"/>
+          <div class="pic-badges tooltip">
+            <img src="assets/badges/{{badge.image}}"/>
+            <span class="tooltiptext">"{{badge.name}}"<br>Unlock at: {{badge.unlock_date}}</span>
+          </div>
         </ion-col>
       </ion-row>
     </ion-grid>
+    
   </div>
   <!-- Badges user-->
 </ion-content>

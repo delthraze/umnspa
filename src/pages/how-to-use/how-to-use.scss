@@ -1,50 +1,75 @@
 page-how-to-use {
-    .logo-spa-besar{
-        // position: fixed;
-        // top: 5%;
-        // left: 25%;
-
-        background-color: rgba($color: white, $alpha: 0.8);
-        border-radius: 10px;
-
-        width: 50%;
-    }
-    .logo-spa{
-        position: fixed;
-        bottom: 5%;
-        left: 3%;
-
-        width: 30%;
+    .title-information{
+        text-align: center;
+        font-size: 14pt;
+        margin-bottom: 50px;
     }
 
-    .ket-how-to{
-        position: fixed;
-        bottom: 5%;
+    .outer-box{
+        position: relative;
         border: 8px solid #8B4513;
         border-radius: 10px;
-        height: 150px !important;
-        width: 90%;
+        height: 1150px !important;
+        width: 95%;
         background-color: #FFDEAD;
         margin: auto;
     }
-    .isi-ket-how-to-1{
+    .mini-box{
         position: absolute;
-        top: 10%;
-        left: 3%;
-        word-wrap: break-word;
+        left: 28%;
+        top: -1.5%;
+        width: 45%;
+        height: 45px;
+        padding-top: 3px;
+        border: 8px solid black;
+        border-radius: 5px;
+        background-color: black;
+        color: white;
+        text-align: center;
+        text-transform: uppercase;
+        font-size: 13pt;
+    }
+    .isi-content{
+        position: absolute;
+        top: 3%;
+        left: 5.5%;
         // font-family: "cafe francoise";
     }
-    .isi-ket-how-to-2{
-        position: absolute;
-        top: 35%;
-        left:25%;
-        word-wrap: break-word;
+    .judul-isi-content{
+        text-align: center;
+        font-size: 14pt;
+        margin-bottom: 10px;
     }
-    .isi-ket-how-to-3{
-        position: absolute;
-        top: 47%;
-        left:27%;
-        word-wrap: break-word;
+    .pemisah{
+        width: 200px;
+        border: 1px black solid;
+        margin-bottom: 20px;
+    }
+    .isi-isinya-content{
+        width: 100%;
+        font-size: 20pt;
+        text-align: center;
+    }
+    .jeda{
+        margin-bottom: 50px;
+    }
+    .spa-title{
         font-size: 13pt;
+        font-weight: bold;
+    }
+    .spa-content{
+
+    }
+
+    .activites-title{
+        text-align: center;
+        font-weight: bold;
+        font-size: 12pt;
+    }
+    .activites-img{
+        width: 92.5%;
+        margin-top: 2.5%;
+        margin-bottom: 1%;
+        text-align: center;
     }
 }

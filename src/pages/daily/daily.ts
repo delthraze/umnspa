@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, NavController, NavParams, AlertController, MenuController, LoadingController, Refresher } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController, MenuController, LoadingController, Refresher, ToastCmp, ToastController } from 'ionic-angular';
 import * as moment from 'moment';
 import { AuthService } from '../../service/AuthService';
 import { WebService } from '../../service/WebService';
@@ -31,7 +31,7 @@ export class DailyPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, 
     private authService: AuthService, private webService: WebService,
     private alertCtrl: AlertController, private menuCtrl: MenuController,
-    private loadingCtrl: LoadingController) {
+    private loadingCtrl: LoadingController, private toastCtrl: ToastController) {
   }
 
   ionViewDidLoad() {
@@ -134,6 +134,7 @@ export class DailyPage {
     } else{
       var intervaltime_ = '(0d ' + intervaltime.substring(11,13) + 'h ' + intervaltime.substring(14,16) + 'm left)';
     }
+    //masih kurang bulan
 
     return intervaltime_;
   }
@@ -164,7 +165,7 @@ export class DailyPage {
 
   }
 
-  do_assignments(assignInfo){
+  do_assignment(assignInfo){
     swal({
       title: "Submit Assignment",
       text: "Are you already submit "+ assignInfo.name +" ?",
@@ -196,6 +197,7 @@ export class DailyPage {
               if(assignInfo.id_elearning == selected.id_elearning){
                   this.assignInfo.splice(ctr,1);
                   this.getLevelInfo();
+                  this.presentToast(responseData['exp']);
                   break;
               }
               else {
@@ -254,6 +256,8 @@ export class DailyPage {
             for(let selected of this.classInfo){
               if(classInfo.kode_mk == selected.kode_mk && classInfo.kelas == selected.kelas){
                   this.classInfo.splice(ctr,1);
+                  this.getLevelInfo();
+                  this.presentToast(responseData['exp']);
                   break;
               }
               else {
@@ -314,6 +318,7 @@ export class DailyPage {
               if(quizInfo.id_elearning == selected.id_elearning){
                   this.quizInfo.splice(ctr,1);
                   this.getLevelInfo();
+                  this.presentToast(responseData['exp']);
                   break;
               }
               else {
@@ -415,269 +420,14 @@ export class DailyPage {
     //return "hai janssen "+difftime;
   }
 
-  do_assignment(assignInfo) {
-    // swal({
-    //   title: "Are you sure?",
-    //   text: classInfo.kode_mk + ' - ' + classInfo.nama_mk + '\n' +
-    //       "Are you sure that you want to attend this class?",
-    //   icon: "warning",
-    // })
-    const alert = this.alertCtrl.create({ 
-      title: 'Already Submit Assignment?',
-      message: assignInfo.kode_mk + '<br>'+ assignInfo.name,
-      buttons: [ 
-        { 
-          text: 'Yes', 
-          handler: data => { 
-            let req = {
-              "nim" : this.authService.nim,
-              "id_elearning" : assignInfo.id_elearning,
-              "kode_mk" : assignInfo.kode_mk,
-              "name" : assignInfo.name,
-              "startdate" : assignInfo.startdate,
-              "enddate" : assignInfo.enddate
-            }
-            //console.log(JSON.stringify(req))
-        
-            this.webService.post(this.webService.url + "add_assignment.php", JSON.stringify(req), null).subscribe(response => {
-              //console.log(response["_body"]);
-              let responseData = JSON.parse(response["_body"]);
-              //console.log(responseData)
-              if(responseData['success']){
-                //this.navCtrl.push(TabEventPage);
-                //harusnya apus
-                let ctr = 0;
-
-                for(let selected of this.assignInfo){
-                  if(assignInfo.id_elearning == selected.id_elearning){
-                      this.assignInfo.splice(ctr,1);
-                      this.getLevelInfo();
-                      break;
-                  }
-                  else {
-                      ctr++;
-                  }
-                }
-              }
-              else{
-                let alert = this.alertCtrl.create({
-                  title: 'Add Event Failed',
-                  subTitle: 'Add Event ',
-                  buttons: [
-                    {
-                      text: 'Ok',
-                      handler: data => {
-                        //this.navCtrl.push(TabEventPage)
-                      }
-                    }
-                  ]
-                });
-                alert.present();
-              }
-            }, error =>{
-            })
-          } 
-        },
-        { 
-          text: 'Cancel',
-          handler: data => { 
-            
-          } 
-        }
-      ]
-      });
-      alert.present(); 
-    console.log(assignInfo.kode_mk)
-  }
-
-  do_class1(classInfo) {
-    // swal({
-    //   title: "Are you sure?",
-    //   text: classInfo.kode_mk + ' - ' + classInfo.nama_mk + '\n' +
-    //       "Are you sure that you want to attend this class?",
-    //   icon: "warning",
-    // })
-    const alert = this.alertCtrl.create({ 
-      title: 'Attend Class',
-      message: classInfo.kode_mk + '-' + classInfo.kelas + '<br>'+ classInfo.nama_mk,
-      buttons: [ 
-        { 
-          text: 'Attend', 
-          handler: data => { 
-            let req = {
-              "nim" : this.authService.nim,
-              "id_kelas" : classInfo.id_kelas,
-              "kode_mk" : classInfo.kode_mk,
-              "nama_mk" : classInfo.nama_mk,
-              "absensi" : 'Y'
-            }
-            console.log(req.id_kelas);
-        
-            this.webService.post(this.webService.url + "add_class.php", JSON.stringify(req), null).subscribe(response => {
-              let responseData = JSON.parse(response["_body"]);
-              console.log(responseData)
-              if(responseData['success']){
-                //this.navCtrl.push(TabEventPage);
-                //harusnya apus
-                let ctr = 0;
-
-                for(let selected of this.classInfo){
-                  if(classInfo.kode_mk == selected.kode_mk && classInfo.kelas == selected.kelas){
-                      this.classInfo.splice(ctr,1);
-                      break;
-                  }
-                  else {
-                      ctr++;
-                  }
-                }
-              }
-              else{
-                let alert = this.alertCtrl.create({
-                  title: 'Add Event Failed',
-                  subTitle: 'Add Event ',
-                  buttons: [
-                    {
-                      text: 'Ok',
-                      handler: data => {
-                        //this.navCtrl.push(TabEventPage)
-                      }
-                    }
-                  ]
-                });
-                alert.present();
-              }
-            }, error =>{
-            })
-          } 
-        },
-        { 
-          text: 'Not Attend',
-          handler: data => { 
-            let req = {
-              "nim" : this.authService.nim,
-              "id_kelas" : classInfo.id_kelas,
-              "kode_mk" : classInfo.kode_mk,
-              "nama_mk" : classInfo.nama_mk,
-              "absensi" : 'N'
-            }
-            //console.log(req['nim'])
-        
-            this.webService.post(this.webService.url + "add_class.php", JSON.stringify(req), null).subscribe(response => {
-              let responseData = JSON.parse(response["_body"]);
-              //console.log(responseData)
-              if(responseData['success']){
-                //this.navCtrl.push(TabEventPage);
-                //harusnya apus
-                let ctr = 0;
-
-                for(let selected of this.classInfo){
-                  if(classInfo.kode_mk == selected.kode_mk && classInfo.kelas == selected.kelas){
-                      this.classInfo.splice(ctr,1);
-                      this.getLevelInfo();
-                      break;
-                  }
-                  else {
-                      ctr++;
-                  }
-                }
-              }
-              else{
-                let alert = this.alertCtrl.create({
-                  title: 'Add Event Failed',
-                  subTitle: 'Add Event ',
-                  buttons: [
-                    {
-                      text: 'Ok',
-                      handler: data => {
-                        //this.navCtrl.push(TabEventPage)
-                      }
-                    }
-                  ]
-                });
-                alert.present();
-              }
-            }, error =>{
-            })
-          } 
-        }
-      ]
-      });
-      alert.present(); 
-    console.log(classInfo.kode_mk)
-  }
-
-  do_quiz1(quizInfo) {
-    // swal({
-    //   title: "Are you sure?",
-    //   text: classInfo.kode_mk + ' - ' + classInfo.nama_mk + '\n' +
-    //       "Are you sure that you want to attend this class?",
-    //   icon: "warning",
-    // })
-    const alert = this.alertCtrl.create({ 
-      title: 'Already Finish Your Quiz?',
-      message: quizInfo.kode_mk + '<br>'+ quizInfo.name,
-      buttons: [ 
-        { 
-          text: 'Yes', 
-          handler: data => { 
-            let req = {
-              "nim" : this.authService.nim,
-              "id_elearning" : quizInfo.id_elearning,
-              "kode_mk" : quizInfo.kode_mk,
-              "startdate" : quizInfo.startdate,
-              "enddate" : quizInfo.enddate
-            }
-            //console.log(JSON.stringify(req))
-        
-            this.webService.post(this.webService.url + "add_quiz.php", JSON.stringify(req), null).subscribe(response => {
-              //console.log(response["_body"]);
-              let responseData = JSON.parse(response["_body"]);
-              //console.log(responseData)
-              if(responseData['success']){
-                //this.navCtrl.push(TabEventPage);
-                //harusnya apus
-                let ctr = 0;
-
-                for(let selected of this.quizInfo){
-                  if(quizInfo.id_elearning == selected.id_elearning){
-                      this.quizInfo.splice(ctr,1);
-                      this.getLevelInfo();
-                      break;
-                  }
-                  else {
-                      ctr++;
-                  }
-                }
-              }
-              else{
-                let alert = this.alertCtrl.create({
-                  title: 'Add Event Failed',
-                  subTitle: 'Add Event ',
-                  buttons: [
-                    {
-                      text: 'Ok',
-                      handler: data => {
-                        //this.navCtrl.push(TabEventPage)
-                      }
-                    }
-                  ]
-                });
-                alert.present();
-              }
-            }, error =>{
-            })
-          } 
-        },
-        { 
-          text: 'Cancel',
-          handler: data => { 
-            
-          } 
-        }
-      ]
-      });
-      alert.present(); 
-    console.log(quizInfo.kode_mk)
+  presentToast(exp) {
+    let toast = this.toastCtrl.create({
+      message: "Exp +"+exp,
+      duration: 3000,
+      position: "bottom",
+      cssClass: "toast-style"
+    });
+    toast.present();
   }
 
 }

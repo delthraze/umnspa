@@ -27,6 +27,7 @@
       <!-- <div class="garis-bawah"></div> -->
   </div>
 
+  <p *ngIf="classInfo == '' && assignInfo == '' && quizInfo == ''" class="freetime">Enjoy Your<br>Free Time!</p>
   <ion-card class="matkul" *ngFor="let class of classInfo" (click)="do_class(class)">
     <ion-icon name="book" class="daily-icon"></ion-icon>
     <ion-card-header text-wrap>
@@ -37,7 +38,7 @@
     </ion-card-content>
   </ion-card>
   <!-- <ion-card class="task" *ngFor="let assign of assignInfo" (click)="do_assignment(assign)"> -->
-  <ion-card class="task" *ngFor="let assign of assignInfo" (click)="do_assignments(assign)">
+  <ion-card class="task" *ngFor="let assign of assignInfo" (click)="do_assignment(assign)">
     <div class="calender">
       <p class="month">{{assign.end_month}}</p>
       <div class="pemisah-calender"></div>

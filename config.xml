@@ -126,4 +126,5 @@
     <plugin name="cordova-plugin-statusbar" spec="^2.4.2" />
     <plugin name="onesignal-cordova-plugin" spec="^2.3.3" />
     <plugin name="cordova-plugin-background-mode" spec="^0.7.2" />
+    <engine name="ios" spec="~4.5.4" />
 </widget>
